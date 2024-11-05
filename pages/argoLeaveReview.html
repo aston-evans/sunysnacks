@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>Leave a Review</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-  <link rel="stylesheet" href="argoteaLeaveReview.css">
+  <link rel="stylesheet" href="../styles/argoLeaveReview.css">
 </head>
 
 <body>
   <h1>Leave a Review</h1>
   <h2>for Argo Tea</h2>
-  <button class='backButton' onclick="location.href='menu.html'"
-    style="position: absolute; top: 603px; left: 185px; background-color: #d70000; color: #fff; border: none; border-radius: 5px; padding: 10px;font-size: 15px; cursor: pointer;">Cancel</button>
+  <button class='backButton' onclick="location.href='../pages/menu.html'">Cancel</button>
   <form>
     <label>Did you enjoy your time at Argo?</label>
     <input type="radio" name="enjoyment" value="yes">Yes
@@ -37,6 +36,4 @@
     <input type="radio" name="return" value="yes">Yes
     <input type="radio" name="return" value="no">No
     
-    <button type = submitReview onclick="location.href='menu.html'"
-      style="position: static; float:right; background-color: #d70000; color: #fff; border: none; border-radius: 5px; padding: 10px; font-size: 15px;cursor: pointer;">Submit
-      Review!</button>
+    <button id="submit" type = submitReview onclick="location.href='../pages/menu.html'">Submit Review!</button>
