@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Leave a Review</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta charset="UTF-8">
+       <link rel="stylesheet" href="millsLeaveReview.css">
+
+  
+</head>
+
+<body>
+  <h1>Leave a Review</h1>
+  <h2>for Mills Dining Hall</h2><!--fix the cancel button below-->
+ <button class='backbutton' onclick="location.href='menu.html'">Cancel</button>
+  <form>
+    <label>Did you enjoy your time at the Mills dining hall?</label>
+    <input type="radio" name="enjoyment" value="yes">Yes
+    <input type="radio" name="enjoyment" value="no">No
+
+    <label>What meal did you get?</label>
+    <input type="text" name="meal">
+
+    <label>How would you rate your experience on a scale of 1-5?</label>
+    <input type="radio" name="stars" value="1">1
+    <input type="radio" name="stars" value="2">2
+    <input type="radio" name="stars" value="3">3
+    <input type="radio" name="stars" value="4">4
+    <input type="radio" name="stars" value="5">5
+
+    <label>Upload a photo of your food (optional):</label>
+    <input type="file" name="photo">
+
+    <label>Any feedback?</label>
+    <textarea name="comments"></textarea>
+
+    <label>Would you return?</label>
+    <input type="radio" name="return" value="yes">Yes
+    <input type="radio" name="return" value="no">No
+    <!--check this button below-->
+    <button id="submit" type = "submit" value="Submit" onclick="location.href='menu.html'">Submit Review!</button>
+    
+  </form>
+</body>
+</html>
+
