@@ -1,0 +1,59 @@
+.review-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+  }
+
+  .review {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  .review h3 {
+    font-size: 24px;
+    margin-top: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .review p {
+    font-size: 18px;
+    margin-bottom: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .review .reviewer {
+    font-style: italic;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+  }
+
+
+  header,
+  footer {
+    background-color: #ff0707;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+   font-family: Arial, sans-serif;
+  }
+
+  .backbutton { 
+    position: absolute; 
+    top: 140px; 
+    left: 20px; 
+    background-color: #FFFFFF;
+    color: #EE4B2B;
+    border: none; 
+    font-size: 16px; 
+    border-radius: 5px; 
+    padding: 12px 24px; 
+    cursor: pointer;
+  }
