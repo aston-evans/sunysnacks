@@ -1,0 +1,55 @@
+
+
+        body {
+            font-family: Arial, sans-serif, Ageo;
+            background-color: #f0f0f0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: #ED0800;
+            color: #fff
+        }
+
+        .logout-button,
+        .map-button {
+            background-color: #ED0800;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 12px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .title {
+            margin-top: 0;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .market-title {
+            margin-top: 20px;
+        }
+
+        .review-button,
+        .current-reviews-button {
+            background-color: #ED0800;
+            color: #fff;
+            border: 10px;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+      
+        .header img {
+            width: 90px;
+            padding: 10px 10px;
+            float: left;
+        }
+
