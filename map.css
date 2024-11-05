@@ -10,3 +10,16 @@ body {
     height: 100vh;
     border: none; /* remove the iframe border */
   }
+
+button {
+    position: absolute; 
+    top: 620px; 
+    left: 20px;
+    background-color: #EE4B2B;
+    color: #fff;
+    border: none; 
+    font-size: 16px; 
+    border-radius: 5px; 
+    padding: 12px 24px; 
+    cursor: pointer;
+}
