@@ -1,18 +1,19 @@
 <!-- This is the login page for the app. First page that's seen when the app is opened.-->
 <!DOCTYPE html> 
 <html lang="en">
-<link rel="icon" href="favicon.ico" type="image/x-icon"> <!--Seems like the icon for the app?-->
+<link rel="icon" href="../images/favicon.ico" type="image/x-icon"> 
 <link rel="login stylesheet" href="../styles/login.css"/>
 
 <head>
   <title>SUNY Snacks - Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
+  
 </head>
 
 <body>
   <div class="login-form">
-    <form>
+    <form class="login">
       <input type="email" placeholder="Email" required>
       <input type="password" placeholder="Password" required>
       <button class="signIn" onclick="location.href='../pages/menu.html'">Sign In </button> <!--Figure out how to prevent user from logging w/out submitting info-->
@@ -24,5 +25,5 @@
 <div class="Logo">
   <img src="../images/favicon.ico" alt="Logo">
 </div>
-
+ 
 </html>
