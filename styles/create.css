@@ -6,7 +6,7 @@ body {
 .container {
     max-width: 500px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fa462f;
     border-radius: 5px;
 }
@@ -14,7 +14,7 @@ body {
 h1 {
     font-size: 35;
     text-align: center;
-    color: #FFFFFF;
+    color: black;
 }
 
 form {
@@ -36,28 +36,22 @@ input, select {
     border-radius: 3px;
 }
 
-.btn-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 .signUp, .cancelButton {
     background-color: #d12d0d;
     padding: 10px 20px;
     color: #fff;
     font-size: 16px;
-    border: none;
-    border-radius: 3px;
     cursor: pointer;
-    position: absolute;
+    
 }
-.signUp {
-    bottom: 80px;
-    right: 15px;
+.buttonalign {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    
 }
 
-.cancelButton {
-    bottom: 80px;
-    left: 15px;
+#role { 
+    width: 520px;
 }

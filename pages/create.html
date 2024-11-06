@@ -1,49 +1,53 @@
 <!DOCTYPE html> <!-- this page allows the user to create an account-->
 <html lang="en">
 <head>
-    <title>SUNY Snacks</title>
+    <title>SUNY Snacks - Create an Account</title>
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <meta charset="UTF-8">
     <link rel="login stylesheet" href="../styles/create.css"/>
 
     
 </head>
-<!-- change this section. Not doing school email anymore. Separating category by either student, falculty, alumni, parent, other--> 
+
 <body>
   <div class="container">
     <h1>Create your account</h1>
     <form id="signUp">
-      <label for="profile-picture">Profile Picture:</label>
-      <input type="file" id="profile-picture" name="profile-picture" placeholder="Profile picture">
-
       <label for="first-name">First Name:</label>
-      <input type="text" id="first-name" name="first-name" placeholder="First name">
+      <input type="text" id="first-name" name="first-name" placeholder="Your first name" required>
 
       <label for="last-name">Last Name:</label>
-      <input type="text" id="last-name" name="last-name" placeholder="Last name">
+      <input type="text" id="last-name" name="last-name" placeholder="Last name" required>
 
-      <label for="school-email">School Email:</label>
-      <input type="email" id="school-email" name="school-email" placeholder="youremail@email.com">
-
-      <label for="current-year">Current Year of School:</label>
-      <select id="current-year" name="current-year">
-        <option value="">Select Year</option>
-        <option value="1">1st Year</option>
-        <option value="2">2nd Year</option>
-        <option value="3">3rd Year</option>
-        <option value="4">4th Year</option>
-      </select>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="youremail@email.com" required>
 
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" placeholder='Password'>
+      <input type="password" id="password" name="password" placeholder='Password' required>
 
       <label for="confirm-password">Confirm Password:</label>
-      <input type="password" id="confirm-password" name="confirm-password" placeholder='Confirm Password'>
+      <input type="password" id="confirm-password" name="confirm-password" placeholder='Confirm Password' required>
+
+      <label for="role">Role:</label>
+      <select id="role" name="role" required>
+        <option value="">Select Year</option>
+        <option value="Student">Student</option>
+        <option value="Faculty">Faculty</option>
+        <option value="Alumni">Alumni</option>
+        <option value="Parent">Parent</option>
+        <option value="Other">Other</option>
+
+      </select>
+      
+      <div class="buttonalign"> 
+      <button class="cancelButton" onclick="location.href='../pages/login.html'">Cancel</button>
+      <button class = "signUp"  onclick="location.href='../pages/menu.html'">Sign Up</button>
+      
+    </div>
+      
 
 
     </form>
   </div>
-
-<button class = "signUp"
-  onclick="location.href='../pages/menu.html'">Sign Up</button>
-   <button class="cancelButton" onclick="location.href='../pages/login.html'">Cancel</button>
+</body>
+</html>
