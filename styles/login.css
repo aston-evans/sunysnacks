@@ -2,16 +2,24 @@
     body {
       background-color: #f62c2c;
       font-family: Arial, sans-serif, Ageo;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0 auto;
+      flex-direction: column;
     }
-
+    
+    
+    
+    
     .login-form {
-      position: fixed;
       max-width: 300px;
-      left: 44px;
-      margin: 400px auto;
-      padding: 20px;
+      padding: 200px;
       background-color: #f62c2c;
       border-radius: 5px;
+      text-align: center;
+      font-size: 18px;
     }
 
     .login-form h1 {
@@ -46,11 +54,3 @@
       color: #ffff;
       text-decoration: none;
     }
-
-    .Logo {
-      position: fixed;
-      border-radius: 10px;
-      bottom: 350px;
-      left: 75px;
-    }
-  
