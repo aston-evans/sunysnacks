@@ -1,1 +1,1 @@
-# Sunyproject
+# sunysnacks
