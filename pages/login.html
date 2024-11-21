@@ -9,25 +9,28 @@
   <meta charset="UTF-8">
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon"> 
   <link rel="login stylesheet" href="../styles/login.css"/>
-<!-- <link rel="whole style sheet" href="../style.css"> -->
+  <link rel="whole style sheet" href="../style.css"> 
 
   
 </head>
 
 <body>
   <div class="login-form">
+  
+<div class="logo">
+  <img class="icon" src="../images/favicon.ico" alt="logo">
+</div>
+
     <form class="login">
       <input type="email" placeholder="Email" required>
       <input type="password" placeholder="Password" required>
-      <button class="signIn" onclick="location.href='../pages/menu.html'">Sign In </button> <!--Figure out how to prevent user from logging w/out submitting info-->
+      <button id="signin" class="signIn" <!--onclick="location.href='../pages/menu.html'"-->Sign In </button> 
+      <script> 
+
+      </script><!--Figure out how to prevent user from logging w/out submitting info-->
     </form>
-    <p>Don't have an account? <a href="../pages/create.html">Click here to sign up</a></p>
+    <p>Don't have an account? <a href="../pages/create.html"><b> Click here to sign up!</a></b></p>
   </div>
-
 </body>
-
-<!--<div class="logo">
-  <img class="icon" src="../images/favicon.ico" alt="logo">
-</div>-->
 
 </html>

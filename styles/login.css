@@ -8,18 +8,26 @@
       height: 100vh;
       margin: 0 auto;
       flex-direction: column;
+      
+    }
+    
+    img {
+      width: 200px;
+      margin-bottom: 20px;
+      
+      
+      
     }
     
     
-    
-    
     .login-form {
-      max-width: 300px;
-      padding: 200px;
-      background-color: #f62c2c;
-      border-radius: 5px;
+      max-width: 500px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
       text-align: center;
       font-size: 18px;
+      
     }
 
     .login-form h1 {
@@ -32,8 +40,8 @@
       width: 93%;
       padding: 10px;
       margin-bottom: 10px;
-      border: none;
-      border-radius: 3px;
+      border: 1px solid black;
+      border-radius: 35px;
     }
 
     .login-form button {
@@ -42,15 +50,20 @@
       background-color: #d12d0d;
       color: #fff;
       border: none;
-      border-radius: 3px;
+      border-radius: 5px;
       cursor: pointer;
     }
 
     .login-form p {
       text-align: center;
+      padding-top: 10px;
     }
 
     .login-form a {
-      color: #ffff;
+      color: red;
       text-decoration: none;
     }
+    
+
+
+   
