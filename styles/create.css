@@ -1,45 +1,59 @@
 body {
-    background-color: white;
+    background-color: #fa462f;
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: top;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+    flex-direction: column;
+    
 }
 
 .container {
+    
     max-width: 500px;
-    margin: 0 auto;
+    border-radius: 100px;
     padding: 30px;
-    background-color: #fa462f;
-    border-radius: 5px;
+    background-color: white;
+    border-radius: 3px;
+    height: 525px;
 }
 
 h1 {
     font-size: 35;
     text-align: center;
     color: black;
+    
 }
 
 form {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 50px;
 }
 
 label {
     display: block;
     margin-bottom: 5px;
-    color: #000000;
+    color: black;
 }
 
 input, select {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    border: 1px solid #000000;
-    border-radius: 3px;
+    border: 1px solid black;
+    background-color: #d3d3d3;
+}
+.signUp {
+    
+    margin-right: -20px;
 }
 
 
 .signUp, .cancelButton {
     background-color: #d12d0d;
-    padding: 10px 20px;
+    padding: 10px;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
