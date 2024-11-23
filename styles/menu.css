@@ -2,30 +2,43 @@
 
         body {
             font-family: Arial, sans-serif, Ageo;
-            background-color: #f0f0f0;
+            background-color: black;
         }
 
         .header {
             text-align: center;
             padding: 10px;
             background-color: #ED0800;
-            color: #fff
+            color: white;
+        }
+
+        .title {
+            
+            margin-top: 10px;
+            margin-right: 15px;
+            
         }
 
         .logout-button,
         .map-button {
-            background-color: #ED0800;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+            border-radius: none;
             padding: 8px 12px;
-            margin-right: 10px;
+            
             cursor: pointer;
         }
 
-        .title {
-            margin-top: 0;
+        .map-button {
+            margin-left: -5px; 
         }
+        
+        .logout-button {
+            margin-right: 20px;
+        }
+
+
 
         .content {
             text-align: center;
@@ -34,15 +47,19 @@
 
         .market-title {
             margin-top: 20px;
+            color: white;
+            text-align: center; 
         }
-
+        .map-button {
+            margin-right: 1px;
+        }
         .review-button,
         .current-reviews-button {
             background-color: #ED0800;
             color: #fff;
             border: 10px;
             border-radius: 10px;
-            padding: 10px 20px;
+            padding: 15px 20px;
             margin-top: 10px;
             cursor: pointer;
         }
@@ -53,3 +70,6 @@
             float: left;
         }
 
+        .place {
+            margin-bottom: 2%;
+        }
