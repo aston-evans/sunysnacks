@@ -1,75 +1,76 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
 
+body {
+    font-family: Arial, sans-serif, Ageo;
+    background-color: #f62c2c; 
+}
 
-        body {
-            font-family: Arial, sans-serif, Ageo;
-            background-color: #ED0800;
-        }
+.header {
+    text-align: center;
+    width: 100%;
+    background-color: white;
+    color: black;
+}
 
-        .header {
-            text-align: center;
-            padding: 10px;
-            background-color: white;
-            color: black;
-        }
-
-        .title {
+/*.title {
             
-            margin-top: 10px;
+    margin-top: 10px;
             margin-right: 15px;
-            
-        }
+           
+}*/
 
-        .logout-button,
-        .map-button {
-            background-color: black;
-            color: white;
-            border: 1px solid white ;
-            border-radius: none;
-            padding: 12px;
-            
-            cursor: pointer;
-        }
+.logout-button,
+.map-button {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: none;
+    padding: 12px;
 
-        .map-button {
-            margin-left: -5px; 
-        }
-        
-        .logout-button {
-            margin-right: 20px;
-        }
+    cursor: pointer;
+}
+
+.map-button {
+    margin-left: -5px;
+}
+
+.logout-button {
+    margin-right: 20px;
+}
 
 
 
-        .content {
-            text-align: center;
-            padding: 20px;
-        }
+.content {
+    text-align: center;
+    padding: 20px;
+}
 
-        .market-title {
-            margin-top: 20px;
-            color: white;
-            text-align: center; 
-        }
-        .map-button {
-            margin-right: 1px;
-        }
-        .review-button,
-        .current-reviews-button {
-            background-color: black;
-            color: #fff;
-            border: 10px;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-      
-        .header img {
-            width: 90px;
-            padding: 10px 10px;
-            float: left;
-        }
+.market-title {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+}
 
-        .place {
-            margin-bottom: 2%;
-        }
+.map-button {
+    margin-right: 1px;
+}
+
+.review-button,
+.current-reviews-button {
+    background-color: black;
+    color: #fff;
+    border: 10px;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+.place {
+    margin-bottom: 2%;
+}
