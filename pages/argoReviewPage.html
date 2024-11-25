@@ -1,47 +1,77 @@
+<!--Review page standard
+Need to figure out how to put a person's review in properly but the format should be. Name + role(italicized), then the rating, then the feedback.-->
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>SUNY Snacks - Student Reviews</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../styles/argoReviewPage.css">
-  </head>
-  <body>
-    <header>
-      <h1>SUNY Snacks</h1>
-      <h2>Argo Tea's</h2>
-      <h3>Current Reviews</h3>
-    </header>
 
-    <button onclick="location.href='../pages/menu.html'">Back</button>
-<!--This is an example of reviews if they were actually created. 
-    <div class="review-section">
-      <div class="review">
-        <h3>Great Tea!</h3>
+<head>
+  <title>Argo Tea - Reviews</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles/argoReviewPage.css">
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <div class="header">
+    <h1>Argo Tea Reviews</h1>
+    <button class="nav" id="menu" onclick="location.href='../pages/menu.html'">Main Menu</button>
+    <button class="nav" id="leave" onclick="location.href='../pages/argoLeaveReview.html'">Leave a Review</button>
+  </div>
+
+  <!--<button class="nav" id="menu" onclick="location.href='../pages/menu.html'">Main Menu</button>
+  <button class="nav" id="leave" onclick="location.href='../pages/argoLeaveReview.html'">Leave a Review</button>
+-->
+<!-- need to make a loop for each time a review is made it gets its own review box.-->
+  <div class="review-section">
+    <div class="review">
+      <!--Example of what a review should look like
         <p>I went to Argo Tea and had a chai teappucchino. The was made perfectly and tasted very fresh.</p>
         <p class="reviewer">- Anonymous, SUNY Student</p>
-        <button onclick="reportReview(this.parentElement)" class="report-button">Report Review</button>
-      </div>
-
-      <div class="review">
-        <h3>Amazing Turkey Pesto!</h3>
-        <p>The turkey pesto sandwich is amazing, although it is alittle pricy!</p>
-        <p class="reviewer">- Anonymous, SUNY Student</p>
-        <button onclick="reportReview(this.parentElement)" class="report-button">Report Review</button>
-      </div>
-
+      -->
     </div>
 
-    <footer>
-      <p>&copy; 2023 SUNY Snacks</p>
-      <h6>Aston Evans, Brian Giordano, Bradley Kirshner and Jake McKeon</h6>
-    </footer> -->
-<!--move this script into a js file. 
+    <div class="review">
+      <!--Another example of what a review should look like.
+      
+      <p>The turkey pesto sandwich is amazing, although it is alittle pricy!</p>
+      <p class="reviewer">- Anonymous, SUNY Student</p>
+    -->
+    </div>
+    <div class="review">
+      <!--Example of what a review should look like
+        <p>I went to Argo Tea and had a chai teappucchino. The was made perfectly and tasted very fresh.</p>
+        <p class="reviewer">- Anonymous, SUNY Student</p>
+      -->
+    </div>
+    <div class="review">
+      <!--Example of what a review should look like
+        <p>I went to Argo Tea and had a chai teappucchino. The was made perfectly and tasted very fresh.</p>
+        <p class="reviewer">- Anonymous, SUNY Student</p>
+      -->
+    </div>
+    <div class="review">
+      <!--Example of what a review should look like
+        <p>I went to Argo Tea and had a chai teappucchino. The was made perfectly and tasted very fresh.</p>
+        <p class="reviewer">- Anonymous, SUNY Student</p>
+      -->
+    </div>
+    <div class="review">
+      <!--Example of what a review should look like
+        <p>I went to Argo Tea and had a chai teappucchino. The was made perfectly and tasted very fresh.</p>
+        <p class="reviewer">- Anonymous, SUNY Student</p>
+      -->
+    </div>
+
+  </div>
+
+  <!--move this script into a js file. 
     <script>
       function reportReview(review) {
         // Replace this alert with your own code to handle reporting the review  <--  Figure this out
         alert(`Reported review: ${review.querySelector('h3').textContent}`);
       }
     </script>-->
-  </body>
+</body>
+
 </html>
