@@ -56,7 +56,6 @@ html {
 }
 
 .nav {
-  
   background-color: white; 
   color: #EE4B2B;
   border: 1px solid black;
@@ -64,4 +63,5 @@ html {
   border-radius: 5px;
   padding: 12px 24px;
   cursor: pointer;
+  font-weight: bold;
 }
