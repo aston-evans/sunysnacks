@@ -36,9 +36,11 @@ label {
     display: block;
     margin-bottom: 5px;
     color: black;
+    padding: 8px;
+    width: 100%;
 }
 
-input, select {
+input {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -64,8 +66,4 @@ input, select {
     justify-content: space-between;
     margin-top: 10px;
     
-}
-
-#role { 
-    width: 520px;
 }

@@ -1,0 +1,32 @@
+<!-- This is the login page for the app. First page that's seen when the app is opened.-->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <title>SUNY Snacks - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel="icon" href="../../static/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../static/styles/login.css" />
+ 
+
+</head>
+
+<body>
+  <div class="login-form">
+
+    <div class="logo">
+      <img class="icon" src="../../static/images/favicon.ico" alt="logo">
+    </div>
+
+    <form class="login">
+      <input name="username" id="username" placeholder="username" required>
+      <input type="password" placeholder="Password" required>
+      <button id="signin" class="signIn" onclick="location.href='../menu.html'"> Sign In </button> 
+    </form>
+    <p>Don't have an account? <a href="create.html"><b> Click here to sign up!</a></b></p>
+  </div>
+</body>
+
+</html>

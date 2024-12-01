@@ -1,0 +1,37 @@
+<!doctype html> <!-- this page allows the user to create an account-->
+<html lang="en">
+
+
+<head>
+  <title>SUNY Snacks - Create an Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../../static/styles/create.css" />
+  
+  <link rel="icon" href="../../static/images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <div class="conatiner"> 
+    <h1>Create your account</h1>
+    {% block content %}
+    <form method="post" id="register">
+      <label for="username">Username</label>
+      <input name="username" id="username" placeholder="Create a username" required>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" placeholder="Create a password" required>
+      
+      <div class="buttonalign">
+        <button class="cancelButton" onclick="location.href='../login.html'">
+          Cancel</button>
+        <button class="signUp" onclick="location.href='../menu.html'">Sign Up</button>
+        
+      </div>
+      
+    </form>
+  </div>
+  {% endblock %}
+
+</body>
+
+</html>
