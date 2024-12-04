@@ -1,6 +1,8 @@
 <!-- Changed the page to be custom to each review page.-->
-{% extend 'base_reviews.html' %}
+{% extends 'blog/base_reviews.html' %}
 
-{% block title %} Seasons {% end block %}
+{% block title %} Seasons {% endblock %}
 
 {% block h1 %} Seasons {% endblock %}
+
+{% block content %} <button class="nav" id="leave" onclick="location.href='/createR/seasonsLeaveReview'">Leave a Review</button> {% endblock %}

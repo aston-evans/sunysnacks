@@ -1,6 +1,8 @@
 <!-- Changed the page to be custom to each review page.-->
-{% extend 'base_reviews.html' %}
+{% extends 'blog/base_reviews.html' %}
 
-{% block title %} Mills Marketplace {% end block %}
+{% block title %} Mills Marketplace {% endblock %}
 
 {% block h1 %} Mills Marketplace {% endblock %}
+
+{% block content %} <button class="nav" id="leave" onclick="location.href='/createR/marketLeaveReview'">Leave a Review</button> {% endblock %}
