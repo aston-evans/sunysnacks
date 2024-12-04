@@ -6,7 +6,7 @@
   <title>SUNY Snacks - Create an Account</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="../../static/styles/create.css" />
+  <link rel="stylesheet" href="{{ url_for('static', path='styles/create.css') }}" />
   
   <link rel="icon" href="../../static/images/favicon.ico" type="image/x-icon">
 </head>
@@ -22,9 +22,9 @@
       <input type="password" name="password" id="password" placeholder="Create a password" required>
       
       <div class="buttonalign">
-        <button class="cancelButton" onclick="location.href='../login.html'">
+        <button class="cancelButton" onclick="location.href='auth/login'">
           Cancel</button>
-        <button class="signUp" onclick="location.href='../menu.html'">Sign Up</button>
+        <button class="signUp" onclick="location.href='/menu'">Sign Up</button>
         
       </div>
       

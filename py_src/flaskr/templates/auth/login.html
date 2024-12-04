@@ -7,8 +7,8 @@
   <title>SUNY Snacks - Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-  <link rel="icon" href="../../static/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../../static/styles/login.css" />
+  <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', path='styles/login.css') }}" />
  
 
 </head>
@@ -23,9 +23,9 @@
     <form class="login">
       <input name="username" id="username" placeholder="username" required>
       <input type="password" placeholder="Password" required>
-      <button id="signin" class="signIn" onclick="location.href='../menu.html'"> Sign In </button> 
+      <button id="signin" class="signIn" onclick="location.href='/menu'"> Sign In </button> 
     </form>
-    <p>Don't have an account? <a href="create.html"><b> Click here to sign up!</a></b></p>
+    <p>Don't have an account? <a href="/create"><b> Click here to sign up!</a></b></p>
   </div>
 </body>
 
