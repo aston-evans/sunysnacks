@@ -17,7 +17,7 @@
 
     <!-- Title-->
     <label>What meal did you get?</label>
-    <input type="text" name="meal" placeholder="What did you eat?">
+    <input type="text" name="meal" placeholder="What did you eat?" required>
 
     <!-- Ratings -->
     <label>How would you rate your experience on a scale of 1-5 (5 being the best)?</label>
@@ -32,8 +32,8 @@
     <textarea name="body" placeholder="Begin..." required>{{ comment_text }}</textarea>
 
 
-    <button class="end" id="submit" type="submit" onclick="location.href='../menu.html'">Submit Review!</button>
-    <button class="end" id='cancel' onclick="location.href='../menu.html'">Cancel</button>
+    <button class="end" id="submit" type="submit" onclick="location.href='/menu'">Submit Review!</button>
+    <button class="end" id='cancel' onclick="location.href='/menu'">Cancel</button>
 
 
   </form>
