@@ -4,16 +4,18 @@
 <head>
     <title>{% block title %}{{ page_title }}{% endblock %} - Reviews</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-    <link rel="stylesheet" href="../../static/reviewPage.css">
-    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/reviewPage.css') }}">
+    <link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
   </head>
   
   <body>
     <article class="review">
       <h1>{% block h1 %} {{ h1_name }} {% endblock %} Reviews</h1>
-      <button class="nav" id="menu" onclick="location.href='../menu.html'">Main Menu</button>
-      <button class="nav" id="leave" onclick="location.href='../pages/argoLeaveReview.html'">Leave a Review</button>
-       <!-- need to make this go to the right ^ location depending on what location it's at.-->
+      <button class="nav" id="menu" onclick="location.href='/menu'">Main Menu</button>
+      {% block content %} 
+      {{ content }}
+      {% endblock %}
+      
     </article>
   
 
