@@ -4,8 +4,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
-  <link rel="stylesheet" href="../static/styles/menu.css" />
-  <link rel="icon" href="../images/favicon.ico" type="image/x-icon"> 
+  <link rel="stylesheet" href="{{ url_for('static', path='/styles/menu.css') }}"/> <!--"../static/styles/menu.css" -->
+  <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon"> 
   <title>SUNY Snacks - Menu</title>
 
 </head>
@@ -13,43 +13,43 @@
 <body>
   <div class="header">
     <h1 class="title">SUNY Snacks</h1>
-    <button class="logout-button" onclick="location.href='auth/login.html'">Log Out</button>
-    <button class="map-button" onclick="location.href='map.html'">Campus Map</button>
+    <button class="logout-button" onclick="location.href='auth/login'">Log Out</button>
+    <button class="map-button" onclick="location.href='/map'">Campus Map</button>
 
   </div>
 
   <div class="content">
     <section class="place">
       <h2 class="market-title">Argo Tea</h2>
-      <button class="review-button" onclick="location.href='createR/argoLeaveReview.html'">Leave a Review</button>
-      <button class="current-reviews-button" onclick="location.href = 'reviewP/argoReviewPage.html'">See Current
+      <button class="review-button" onclick="location.href='/createR/argoLeaveReview'">Leave a Review</button>
+      <button class="current-reviews-button" onclick="location.href = 'reviewP/argoReview'">See Current
         Reviews</button>
     </section>
 
     <section class="place">
       <h2 class="market-title">Mills Dining Hall</h2>
-      <button class="review-button" onclick="location.href='createR/millsLeaveReview.html'">Leave a Review</button>
-      <button class="current-reviews-button" onclick="location.href = 'reviewP/millsReviewPage.html'">See Current
+      <button class="review-button" onclick="location.href='/createR/millsLeaveReview'">Leave a Review</button>
+      <button class="current-reviews-button" onclick="location.href = '/reviewP/millsReview'">See Current
         Reviews</button>
     </section>
 
     <section class="place">
       <h2 class="market-title">Mills Marketplace</h2>
-      <button class="review-button" onclick="location.href='createR/marketLeaveReview.html'">Leave a Review</button>
-      <button class="current-reviews-button" onclick="location.href = 'reviewP/marketReviewPage.html'">See Current
+      <button class="review-button" onclick="location.href='/createR/marketLeaveReview'">Leave a Review</button>
+      <button class="current-reviews-button" onclick="location.href = 'reviewP/marketReview'">See Current
         Reviews</button>
     </section>
 
     <section class="place">
       <h2 class="market-title">Seasons</h2>
-      <button class="review-button" onclick="location.href='createR/seasonsLeaveReview.html'">Leave a Review</button>
-      <button class="current-reviews-button" onclick="location.href = 'reviewP/seasonsReviewPage.html'">See Current Reviews</button>
+      <button class="review-button" onclick="location.href='/createR/seasonsLeaveReview'">Leave a Review</button>
+      <button class="current-reviews-button" onclick="location.href = '/reviewP/seasonsReview'">See Current Reviews</button>
     </section>
 
     <section class="place">
       <h2 class="market-title">Wilsbach Dining Hall</h2>
-      <button class="review-button" onclick="location.href='createR/wilsLeaveReview.html'">Leave a Review</button>
-      <button class="current-reviews-button" onclick="location.href = 'reviewP/wilsReviewPage.html'">See Current
+      <button class="review-button" onclick="location.href='/createR/wilsLeaveReview'">Leave a Review</button>
+      <button class="current-reviews-button" onclick="location.href = '/reviewP/wilsReview'">See Current
         Reviews</button>
     </section>
   </div>
