@@ -13,9 +13,9 @@ from pydantic import BaseModel  # noqa: F401
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="py_src/flaskr/static"), name="static")
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="py_src/flaskr/templates")
 
 
 @app.get("/", response_class=HTMLResponse)
