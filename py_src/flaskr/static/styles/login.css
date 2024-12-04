@@ -1,6 +1,6 @@
-
+/* style is not changing after editing it */
     body {
-      background-color: #f62c2c;
+      background-color: black;/* #f62c2c;*/
       font-family: Arial, sans-serif, Ageo;
       display: flex;
       justify-content: center;
@@ -18,7 +18,7 @@
     }
     
     
-    .login-form {
+    /*.login-form {
       max-width: 500px;
       padding: 20px;
       background-color: white;
@@ -33,16 +33,15 @@
       margin-bottom: 20px;
     }
 
-    .login-form input[type="email"],
-    .login-form input[type="password"] {
+    /*.login-form input {
       width: 93%;
       padding: 10px;
       margin-bottom: 10px;
       border: 1px solid black;
       border-radius: 35px;
-    }
+    }*/
 
-    .login-form button {
+    /*.login-form button {
       width: 100%;
       padding: 10px;
       background-color: #d12d0d;
@@ -50,7 +49,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-    }
+    }*/
 
     .login-form p {
       text-align: center;
