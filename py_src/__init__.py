@@ -13,7 +13,7 @@ from pydantic import BaseModel  # noqa: F401
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="py_src/static"), name="static")
 
 templates = Jinja2Templates(directory="py_src/templates")
 
