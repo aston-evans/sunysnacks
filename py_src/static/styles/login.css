@@ -18,7 +18,7 @@
     }
     
     
-    /*.login-form {
+    .login-form {
       max-width: 500px;
       padding: 20px;
       background-color: white;
@@ -33,15 +33,15 @@
       margin-bottom: 20px;
     }
 
-    /*.login-form input {
+    .login-form input {
       width: 93%;
       padding: 10px;
       margin-bottom: 10px;
       border: 1px solid black;
       border-radius: 35px;
-    }*/
+    }
 
-    /*.login-form button {
+    .login-form button {
       width: 100%;
       padding: 10px;
       background-color: #d12d0d;
@@ -49,12 +49,12 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-    }*/
+    }
 
-    .login-form p {
+    /*.login-form p {
       text-align: center;
       padding-top: 10px;
-    }
+    }*/
 
     .login-form a {
       color: red;
