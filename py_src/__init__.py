@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Annotated  # noqa
 from pydantic import BaseModel  # noqa: F401
-from sqlmodel import SQLModel, Field, create_engine, Session, Relationship  # noqa: F401
+from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select  # noqa: F401
 from passlib.context import CryptContext  # noqa: F401
 
 app = FastAPI()
@@ -23,6 +23,7 @@ class User(SQLModel, table=True):
     user_id: int | None = Field(default=None, primary_key=True)
     username: str = Field(index=True, unique=True, nullable=False)
     password: str = Field(nullable=False)
+    reviews: list["Review"] = Relationship(back_populates="author")
     """This is the user table
     CREATE TABLE user (
   user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,11 +36,14 @@ class Review(SQLModel, table=True):
     __tablename__ = "reviews"
 
     post_id: int | None = Field(default=None, primary_key=True)
-    author_id: int = Field(nullable=False, foreign_key="author.id")
-    location_id: int = Field(nullable=False, foreign_key="location.id")
+    author_id: int = Field(nullable=False, foreign_key="users.user_id")
+    location_id: int = Field(nullable=False, foreign_key="locations.location_id")
     title: str = Field(nullable=False)
     body: str = Field(nullable=False)
     rating: int = Field(nullable=False)
+
+    author: "User" = Relationship(back_populates="reviews")
+    location: "Location" = Relationship(back_populates="reviews")
 
     """post_id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
@@ -54,9 +58,10 @@ class Review(SQLModel, table=True):
 
 class Location(SQLModel, table=True):
     __tablename__ = "locations"
-    
+
     location_id: int | None = Field(default=None, primary_key=True)
     name: str = Field(default=None, nullable=False, index=True)
+    reviews: list["Review"] = Relationship(back_populates="location")
     """CREATE TABLE locations (
   location_id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL
@@ -67,7 +72,6 @@ class Location(SQLModel, table=True):
 # creates the entire db + tables, adds locations values.
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
-    
 
 
 def get_session():
@@ -77,27 +81,39 @@ def get_session():
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
-'''@app.post("/register")
-async def register(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_session)): 
-    db.    
-    user = User.get(username)
-    userp = User.get(password)
-    #checking if username already exists.
-    if user:
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+# hashed pwd
+def get_hashpwd(password):
+    return pwd_context.hash(password)
+
+
+@app.post("/register")
+async def register(
+    username: str = Form(...),
+    password: str = Form(...),
+    db: Session = Depends(get_session),
+):
+    old_user = db.exec(select(User).where(User.username == username)).first()
+    # checking if username already exists.
+    if old_user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Username already exists",
         )
-    user = User(username=username)
-    userp = User(password=password)
-    #new = 
+    else:
+        hashed_pwd = pwd_context.hash(password)
+        new_user = User(username=username, password=hashed_pwd)
+    db.add(new_user)
+    db.commit()
 
-trying to add the user info/input to the database so that users could login.. 
-''' 
-    
+    return {"message": "Account was created", "username": new_user.username}
 
 
-    
+@app.get("/register", response_class=HTMLResponse)
+async def signup(request: Request, q: None = None):
+    return templates.TemplateResponse("menu.html", {"request": request, "q": q})
 
 
 # adds location values for the location Table
@@ -118,10 +134,15 @@ def create_locations():
 
 
 sqlite_db_name = "database.db"
-sqlite_url = f"sqlite://{sqlite_db_name}"
+sqlite_url = f"sqlite:///{sqlite_db_name}"
 
 connect_args = {"check_same_thread": False}
 engine = create_engine(sqlite_url, connect_args=connect_args)
+
+
+@app.on_event("startup")
+def startup():
+    create_db_and_tables()
 
 
 # routes!
@@ -230,79 +251,3 @@ async def wilsReview(
     return templates.TemplateResponse(
         "reviewP/wilsReviewPage.html", {"request": request}
     )
-
-
-"""
-class Response(BaseModel):
-    title: str
-    body: str
-    author: str 
-    rating: int
-    
-
-@app.get("/")
-async def hi():
-    return "hello world"
-
-@app.post("/reviews")
-async def reviews(review: Response):
-    author = review.author
-    body = review.body
-    title = review.title
-    rating = review.rating
-    return {"message": "Review Submitted!", "review_info": review.dict()}
-
-p1 = Response(author="aston", body="nice guy", title="life", rating=5)"""
-
-
-"""
-@app.get("/templates/menu")
-def main():
-    return 
-"""
-
-# creating app
-'''def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY="dev",
-        DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
-    )
-
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile("config.py", silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
-
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
-    """@app.route('/menu')
-    def home():
-        return render_template('menu.html')
-       """
-
-    from . import db
-
-    db.init_app(app)
-
-    from . import auth
-
-    app.register_blueprint(auth.bp)
-
-    from . import blog
-
-    app.register_blueprint(blog.bp)
-    app.add_url_rule("/", endpoint="menu")  # index will be changed/
-    from . import menu
-
-    app.register_blueprint(menu.bp)
-    app.add_url_rule("/", endpoint="menu.menu")
-
-    return app
-'''
