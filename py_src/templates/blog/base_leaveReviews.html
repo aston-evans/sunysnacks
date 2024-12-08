@@ -12,7 +12,7 @@
 <body>
   <h1> Leave a Review </h1>
 
-  <form method="POST" action="{ url_for('blog.create', location_id=location_id )}}  ">
+  <form method="post" action="/reviewcreate">
     <h2>{% block h2 %} { h2_name } {% endblock %}</h2>
 
     <!-- Title-->
@@ -32,7 +32,7 @@
     <textarea name="body" placeholder="Begin..." required>{{ comment_text }}</textarea>
 
 
-    <button class="end" id="submit" type="submit" onclick="location.href='/menu'">Submit Review!</button>
+    <button class="end" id="submit" type="submit">Submit Review!</button>
     <button class="end" id='cancel' onclick="location.href='/menu'">Cancel</button>
 
 
