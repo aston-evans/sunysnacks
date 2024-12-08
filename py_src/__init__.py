@@ -4,7 +4,7 @@
 # from flask import Flask
 # from flask import render_template
 from fastapi import FastAPI, Request, Query, Depends, Form, HTTPException, status  # noqa: F401
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse #noqa 
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Annotated  # noqa
@@ -109,6 +109,25 @@ async def register(
     db.commit()
 
     return {"message": "Account was created", "username": new_user.username}
+
+ 
+#attempting to create a proper link to the right review page depending on what the user clicks. 
+@app.post("/reviewcreate")
+async def createreview(
+    title: str = Form(...),
+    stars: int = Form(...),
+    body: str = Form(...),
+    location_id: int = Form(...),
+    db: Session = Depends(get_session),
+):
+    review = Review(title=title, rating=stars, body=body, location_id=location_id)
+    
+    db.add(review)
+    db.commit()
+
+    return templates.TemplateResponse("menu.html", {"message":"Your post was created!" })
+    
+    
 
 
 @app.get("/register", response_class=HTMLResponse)
