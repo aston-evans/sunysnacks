@@ -4,7 +4,7 @@
 # from flask import Flask
 # from flask import render_template
 from fastapi import FastAPI, Request, Query, Depends, Form, HTTPException, status  # noqa: F401
-from fastapi.responses import HTMLResponse, RedirectResponse #noqa 
+from fastapi.responses import HTMLResponse, RedirectResponse  # noqa
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Annotated  # noqa
@@ -23,7 +23,7 @@ class User(SQLModel, table=True):
     user_id: int | None = Field(default=None, primary_key=True)
     username: str = Field(index=True, unique=True, nullable=False)
     password: str = Field(nullable=False)
-    reviews: list["Review"] = Relationship(back_populates="author")
+    reviews: list["Review"] = Relationship(back_populates="author")  ###
     """This is the user table
     CREATE TABLE user (
   user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,15 +45,7 @@ class Review(SQLModel, table=True):
     author: "User" = Relationship(back_populates="reviews")
     location: "Location" = Relationship(back_populates="reviews")
 
-    """post_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
-  location_id INTEGER NOT NULL,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, #debating bc I don't the value, might be a str 
-  title TEXT NOT NULL, 
-  body TEXT NOT NULL,
-  rating INTEGER NOT NULL
-  FOREIGN KEY (author_id) REFERENCES user (user_id)
-  FOREIGN KEY (location_id) REFERENCES locations (location_id)"""
+    
 
 
 class Location(SQLModel, table=True):
@@ -110,22 +102,33 @@ async def register(
 
     return {"message": "Account was created", "username": new_user.username}
 
- 
-#attempting to create a proper link to the right review page depending on what the user clicks. 
+
+# attempting to create a proper link to the right review page depending on what the user clicks.
+# needs an an author parameter as well
+#this works need to figure out how to update user_id
 @app.post("/reviewcreate")
 async def createreview(
-    title: str = Form(...),
+    meal: str = Form(...),
     stars: int = Form(...),
-    body: str = Form(...),
+    content: str = Form(...),
     location_id: int = Form(...),
+    user_id: int = Form(...),
     db: Session = Depends(get_session),
 ):
-    review = Review(title=title, rating=stars, body=body, location_id=location_id)
     
-    db.add(review)
-    db.commit()
+     
+    review = Review(
+        title=meal,
+        rating=stars,
+        body=content,
+        location_id=location_id,
+        author_id=user_id,
+    )
 
-    return templates.TemplateResponse("menu.html", {"message":"Your post was created!" })
+    db.add(review)
+    
+    db.commit()
+    
     
     
 
@@ -162,6 +165,7 @@ engine = create_engine(sqlite_url, connect_args=connect_args)
 @app.on_event("startup")
 def startup():
     create_db_and_tables()
+    create_locations()
 
 
 # routes!
