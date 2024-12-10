@@ -19,7 +19,7 @@ CREATE TABLE locations (
   name TEXT NOT NULL
 );
 
-CREATE TABLE post (
+CREATE TABLE reviews (
   post_id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   location_id INTEGER NOT NULL,
