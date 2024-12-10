@@ -22,10 +22,10 @@
     <div class="review-section">
       {% for post in reviews %}
       <article class="review" id="post">
-          <p class="ptitle">{{ post.title }}</p>
-          <p class="prating">{{ post.rating }} stars </p>
-          <p class="pbody">{{ post.body }}</p>
-          <p class="pauthor">by {{ post.username }} at {{ post.created }}</p>
+          <p class="ptitle">{{ review.title }}</p>
+          <p class="prating">{{ review.rating }} stars </p>
+          <p class="pbody">{{ review.body }}</p>
+          <p class="pauthor">by {{ review.username }} </p><!--at {{ post.created }} adding this later -->
       </article>
       {% endfor %}
 
