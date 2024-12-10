@@ -23,19 +23,13 @@ class User(SQLModel, table=True):
     user_id: int | None = Field(default=None, primary_key=True)
     username: str = Field(index=True, unique=True, nullable=False)
     password: str = Field(nullable=False)
-    reviews: list["Review"] = Relationship(back_populates="author")  ###
-    """This is the user table
-    CREATE TABLE user (
-  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
-);"""
+    reviews: list["Review"] = Relationship(back_populates="author")
 
 
 class Review(SQLModel, table=True):
     __tablename__ = "reviews"
 
-    post_id: int | None = Field(default=None, primary_key=True)
+    review_id: int | None = Field(default=None, primary_key=True)
     author_id: int = Field(nullable=False, foreign_key="users.user_id")
     location_id: int = Field(nullable=False, foreign_key="locations.location_id")
     title: str = Field(nullable=False)
@@ -45,8 +39,6 @@ class Review(SQLModel, table=True):
     author: "User" = Relationship(back_populates="reviews")
     location: "Location" = Relationship(back_populates="reviews")
 
-    
-
 
 class Location(SQLModel, table=True):
     __tablename__ = "locations"
@@ -54,11 +46,6 @@ class Location(SQLModel, table=True):
     location_id: int | None = Field(default=None, primary_key=True)
     name: str = Field(default=None, nullable=False, index=True)
     reviews: list["Review"] = Relationship(back_populates="location")
-    """CREATE TABLE locations (
-  location_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL
-);
-"""
 
 
 # creates the entire db + tables, adds locations values.
@@ -72,7 +59,7 @@ def get_session():
 
 
 SessionDep = Annotated[Session, Depends(get_session)]
-
+# for has passwords
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
@@ -88,24 +75,33 @@ async def register(
     db: Session = Depends(get_session),
 ):
     old_user = db.exec(select(User).where(User.username == username)).first()
-    # checking if username already exists.
+    # checking if username already exists. -- Figure out how to send this to another page when the user already exists. 
     if old_user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Username already exists",
         )
+        
     else:
-        hashed_pwd = pwd_context.hash(password)
-        new_user = User(username=username, password=hashed_pwd)
+        # password with hash
+        # hashed_pwd = pwd_context.hash(password)
+        # new_user = User(username=username, password=hashed_pwd)
+        new_user = User(username=username, password=password)
     db.add(new_user)
     db.commit()
 
-    return {"message": "Account was created", "username": new_user.username}
+    return RedirectResponse("/accountcreated", status_code=303)
+
+
+# btl = back to login
+@app.get("/accountcreated", response_class=HTMLResponse)
+async def btl(request: Request):
+    return templates.TemplateResponse("auth/login.html", {"request": request})
 
 
 # attempting to create a proper link to the right review page depending on what the user clicks.
 # needs an an author parameter as well
-#this works need to figure out how to update user_id
+# this works need to figure out how to update user_id
 @app.post("/reviewcreate")
 async def createreview(
     meal: str = Form(...),
@@ -115,8 +111,6 @@ async def createreview(
     user_id: int = Form(...),
     db: Session = Depends(get_session),
 ):
-    
-     
     review = Review(
         title=meal,
         rating=stars,
@@ -126,11 +120,50 @@ async def createreview(
     )
 
     db.add(review)
-    
+
     db.commit()
-    
-    
-    
+
+    return RedirectResponse(url="/success", status_code=303)
+
+
+# btm = back to menu
+@app.get("/success", response_class=HTMLResponse)
+async def btm(request: Request):
+    return templates.TemplateResponse("menu.html", {"request": request})
+
+
+# need to pull the proper review_id, then I beleive this code w work.
+@app.get("/reviewcreate/{review_id}", response_class=HTMLResponse)
+async def addreview(
+    request: Request,
+    review_id: int,
+    location_id: int,
+    db: Session = Depends(get_session),
+):
+    review = db.exec(select(Review).where(Review.review_id == review_id)).first()
+    location = db.exec(select(Review).where(Review.location_id == location_id)).first()
+    if location == 1:
+        return templates.TemplateResponse(
+            "reviewP/argoReviewPage.html", {"request": request, "review": review}
+        )
+    elif location == 2:
+        return templates.TemplateResponse(
+            "reviewP/marketReviewPage.html", {"request": request, "review": review}
+        )
+    elif location == 3:
+        return templates.TemplateResponse(
+            "reviewP/millsReviewPage.html", {"request": request, "review": review}
+        )
+    elif location == 4:
+        return templates.TemplateResponse(
+            "reviewP/seasonsReviewPage.html", {"request": request, "review": review}
+        )
+    elif location == 5:
+        return templates.TemplateResponse(
+            "reviewP/wilsReviewPage.html", {"request": request, "review": review}
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Page not found. try again")
 
 
 @app.get("/register", response_class=HTMLResponse)
@@ -165,7 +198,11 @@ engine = create_engine(sqlite_url, connect_args=connect_args)
 @app.on_event("startup")
 def startup():
     create_db_and_tables()
-    create_locations()
+    # inserts the locations only once.
+    with Session(engine) as session:
+        location_exists = session.exec(select(Location)).first()
+        if not location_exists:
+            create_locations()
 
 
 # routes!
