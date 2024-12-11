@@ -20,13 +20,14 @@
   
 
     <div class="review-section">
-      {% for post in reviews %}
-      <article class="review" id="post">
-          <p class="ptitle">{{ review.title }}</p>
-          <p class="prating">{{ review.rating }} stars </p>
+      {% for review in reviews %}
+      <article class="review" id="review">
+          <p class="ptitle">{{ review.title }}</p> <!--going to bold this later and make the font bigger-->
+          <hr>
           <p class="pbody">{{ review.body }}</p>
-          <p class="pauthor">by {{ review.username }} </p><!--at {{ post.created }} adding this later -->
-      </article>
+          <p class="prating">{{ review.rating }} stars </p>
+          <p class="pauthor">by {{ review.author }} </p> <!--at {{ review.created }} adding this later -->
+        </article>
       {% endfor %}
 
     </div>
