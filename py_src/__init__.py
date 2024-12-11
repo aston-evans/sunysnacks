@@ -1,13 +1,12 @@
 # trying to incorporate fastapi into the project.
 
-# import os
-# from flask import Flask
-# from flask import render_template
+import os #noqa
 from fastapi import FastAPI, Request, Query, Depends, Form, HTTPException, status  # noqa: F401
 from fastapi.responses import HTMLResponse, RedirectResponse  # noqa
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Annotated  # noqa
+#from datetime import datetime
 from pydantic import BaseModel  # noqa: F401
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select  # noqa: F401
 from passlib.context import CryptContext  # noqa: F401
@@ -35,7 +34,10 @@ class Review(SQLModel, table=True):
     title: str = Field(nullable=False)
     body: str = Field(nullable=False)
     rating: int = Field(nullable=False)
-
+    #timestamps 
+    #created: datetime = Field(nullable=False) Field(sa_column=Column(TIMESTAMP(timezone=True),
+                        #nullable=False, server_default=text("now()")))
+#link values  
     author: "User" = Relationship(back_populates="reviews")
     location: "Location" = Relationship(back_populates="reviews")
 
@@ -123,47 +125,7 @@ async def createreview(
 
     db.commit()
 
-    return RedirectResponse(url="/success", status_code=303)
-
-
-# btm = back to menu
-@app.get("/success", response_class=HTMLResponse)
-async def btm(request: Request):
-    return templates.TemplateResponse("menu.html", {"request": request})
-
-
-# need to pull the proper review_id, then I beleive this code w work.
-@app.get("/reviewcreate/{review_id}", response_class=HTMLResponse)
-async def addreview(
-    request: Request,
-    review_id: int,
-    location_id: int,
-    db: Session = Depends(get_session),
-):
-    review = db.exec(select(Review).where(Review.review_id == review_id)).first()
-    location = db.exec(select(Review).where(Review.location_id == location_id)).first()
-    if location == 1:
-        return templates.TemplateResponse(
-            "reviewP/argoReviewPage.html", {"request": request, "review": review}
-        )
-    elif location == 2:
-        return templates.TemplateResponse(
-            "reviewP/marketReviewPage.html", {"request": request, "review": review}
-        )
-    elif location == 3:
-        return templates.TemplateResponse(
-            "reviewP/millsReviewPage.html", {"request": request, "review": review}
-        )
-    elif location == 4:
-        return templates.TemplateResponse(
-            "reviewP/seasonsReviewPage.html", {"request": request, "review": review}
-        )
-    elif location == 5:
-        return templates.TemplateResponse(
-            "reviewP/wilsReviewPage.html", {"request": request, "review": review}
-        )
-    else:
-        raise HTTPException(status_code=404, detail="Page not found. try again")
+    return RedirectResponse(url="/menu", status_code= 303)      
 
 
 @app.get("/register", response_class=HTMLResponse)
@@ -233,7 +195,7 @@ async def map(request: Request):
 
 # createR is the route for the leave review pages
 @app.get("/createR/argoLeaveReview", response_class=HTMLResponse)
-async def argoLeave(request: Request):  # certain a query's will be needed here later on
+async def argoLeave(request: Request):  
     return templates.TemplateResponse(
         "createR/argoLeaveReview.html", {"request": request}
     )
@@ -271,43 +233,107 @@ async def wilsLeave(request: Request):
 @app.get("/reviewP/argoReview", response_class=HTMLResponse)
 async def argoReview(
     request: Request,
-):  # potential queries? Probably more in the dictionary.
-    return templates.TemplateResponse(
-        "reviewP/argoReviewPage.html", {"request": request}
-    )
+    db: Session = Depends(get_session)
+):  
+    reviews = db.exec(select(Review, User).join(User, Review.author_id == User.user_id).where(Review.location_id == 1)).all()
+
+
+    
+    newreview = []
+    for review, user in reviews:
+        newreview.append(
+            {
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "author": user.username,
+            }
+        )
+    return templates.TemplateResponse("reviewP/argoReviewPage.html", {"request": request, "reviews": newreview})
 
 
 @app.get("/reviewP/marketReview", response_class=HTMLResponse)
 async def marketReview(
     request: Request,
-):  # potential queries? Probably more in the dictionary.
-    return templates.TemplateResponse(
-        "reviewP/marketReviewPage.html", {"request": request}
-    )
+    db: Session = Depends(get_session)
+):  
+    reviews = db.exec(select(Review, User).join(User, Review.author_id == User.user_id).where(Review.location_id == 2)).all()
+
+    newreview = []
+    for review, user in reviews:
+        newreview.append(
+            {
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "author": user.username,
+            }
+        )
+    return templates.TemplateResponse("reviewP/marketReviewPage.html", {"request": request, "reviews": newreview})
 
 
 @app.get("/reviewP/millsReview", response_class=HTMLResponse)
 async def millsReview(
     request: Request,
-):  # potential queries? Probably more in the dictionary.
+    db: Session = Depends(get_session)
+):  
+
+    reviews = db.exec(select(Review, User).join(User, Review.author_id == User.user_id).where(Review.location_id == 3)).all()
+
+    newreview = []
+    for review, user in reviews:
+        newreview.append(
+            {
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "author": user.username,
+            }
+        )
     return templates.TemplateResponse(
-        "reviewP/millsReviewPage.html", {"request": request}
+        "reviewP/millsReviewPage.html", {"request": request, "reviews": newreview}
     )
 
 
 @app.get("/reviewP/seasonsReview", response_class=HTMLResponse)
 async def seasonsReview(
     request: Request,
-):  # potential queries? Probably more in the dictionary.
+    db: Session = Depends(get_session)
+):  
+    reviews = db.exec(select(Review, User).join(User, Review.author_id == User.user_id).where(Review.location_id == 4)).all()
+
+    newreview = []
+    for review, user in reviews:
+        newreview.append(
+            {
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "author": user.username,
+            }
+        )
     return templates.TemplateResponse(
-        "reviewP/seasonsReviewPage.html", {"request": request}
+        "reviewP/seasonsReviewPage.html", {"request": request, "reviews": newreview}
     )
 
 
 @app.get("/reviewP/wilsReview", response_class=HTMLResponse)
 async def wilsReview(
     request: Request,
-):  # potential queries? Probably more in the dictionary.
+    db: Session = Depends(get_session)
+):  
+    reviews = db.exec(select(Review, User).join(User, Review.author_id == User.user_id).where(Review.location_id == 5)).all()
+
+    newreview = []
+    for review, user in reviews:
+        newreview.append(
+            {
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "author": user.username,
+            }
+        )
     return templates.TemplateResponse(
-        "reviewP/wilsReviewPage.html", {"request": request}
+        "reviewP/wilsReviewPage.html", {"request": request, "reviews": newreview}
     )
