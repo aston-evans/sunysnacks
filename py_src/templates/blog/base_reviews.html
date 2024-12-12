@@ -1,0 +1,37 @@
+<!--base review page for all review pages -->
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <title>{% block title %}{{ page_title }}{% endblock %} - Reviews</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/reviewPage.css') }}">
+    <link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
+  </head>
+  
+  <body>
+    <article class="review">
+      <h1>{% block h1 %} {{ h1_name }} {% endblock %} Reviews</h1>
+      <button class="nav" id="menu" onclick="location.href='/menu'">Main Menu</button>
+      {% block content %} 
+      {{ content }}
+      {% endblock %}
+      
+    </article>
+  
+
+    <div class="review-section">
+      {% for review in reviews %}
+      <article class="review" id="review">
+          <p class="ptitle">{{ review.title }}</p> <!--going to bold this later and make the font bigger-->
+          <hr>
+          <p class="pbody">{{ review.body }}</p>
+          <p class="prating">{{ review.rating }} stars </p>
+          <p class="pauthor">by {{ review.author }} </p> <!--at {{ review.created }} adding this later -->
+        </article>
+      {% endfor %}
+
+    </div>
+  
+  </body>
+  
+  </html> 

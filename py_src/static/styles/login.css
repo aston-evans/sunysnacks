@@ -1,6 +1,6 @@
-
+/* style is not changing after editing it */
     body {
-      background-color: #f62c2c;
+      background-color:#f62c2c;
       font-family: Arial, sans-serif, Ageo;
       display: flex;
       justify-content: center;
@@ -25,7 +25,7 @@
       border-radius: 10px;
       text-align: center;
       font-size: 18px;
-      
+    
     }
 
     .login-form h1 {
@@ -33,8 +33,7 @@
       margin-bottom: 20px;
     }
 
-    .login-form input[type="email"],
-    .login-form input[type="password"] {
+    .login-form input {
       width: 93%;
       padding: 10px;
       margin-bottom: 10px;
@@ -52,10 +51,10 @@
       cursor: pointer;
     }
 
-    .login-form p {
+    /*.login-form p {
       text-align: center;
       padding-top: 10px;
-    }
+    }*/
 
     .login-form a {
       color: red;
