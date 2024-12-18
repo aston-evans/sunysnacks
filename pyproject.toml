@@ -16,11 +16,14 @@ dependencies = [
     "fastapi[standard]>=0.115.5",
     "pydantic>=2.10.2",
     "sqlmodel>=0.0.22",
-    "passlib>=1.7.4",
+    "passlib[bcrypt]>=1.7.4",
+    "pyjwt>=2.10.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.9"
 
+[project.scripts]
+sunyapp = "snacks.main:app"
 
 [build-system]
 requires = ["hatchling"]
@@ -42,10 +45,10 @@ dev-dependencies = [
 
 [tool.hatch.build.targets.wheel]
 packages = [
-    "py_src/flaskr",
+    "py_src/snacks",
 ]
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "py_src/flaskr",
+    "py_src/snacks",
 ]
