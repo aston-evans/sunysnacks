@@ -8,22 +8,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="{{ url_for('static', path='styles/login.css') }}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', path='styles/login.css') }}"/>
   <script src="../../static/script.js"></script>
 
-</head>
+</head > 
 
 <body>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <div class="login-form">
 
     <div class="logo">
-      <img class="icon" src="../../static/images/favicon.ico" alt="logo">
+      <img class="w-200 mb-4" src="../../static/images/favicon.ico" alt="logo">
     </div>
-
-    <form id="login"class="login" action="/menu">
-      <input name="username" id="username" placeholder="Username" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit" id="signin" class="signIn" > Sign In </button> 
+ 
+    <form id="login" class="login" action="/menu">
+      <div class="mb-auto">
+      <label for="username" class="form-label d-flex align-items-left">Username</label>
+      <input class="p-1 mb-2  d-flex align-items-left" name="username" id="username" required>
+      </div>
+      <div class="mb-auto">
+      <label for="password"   class="form-label  d-flex align-items-left">Password</label>
+      <input class="p-1 mb-3  d-flex align-items-left" type="password" id="password" required>
+      </div>
+      <button type="submit" id="signin" class="btn btn-primary mb-2 "> Sign In </button> 
     </form>
     <p>Don't have an account? <a href="/create"><b> Click here to sign up!</a></b></p>
   </div>

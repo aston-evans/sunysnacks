@@ -11,11 +11,11 @@
       
     }
     
-    img {
+    /*img {
       width: 200px;
       margin-bottom: 20px;
      
-    }
+    }*/
     
     
     .login-form {
@@ -34,16 +34,16 @@
     }
 
     .login-form input {
-      width: 93%;
-      padding: 10px;
-      margin-bottom: 10px;
+      width: 100%;
+      /*padding: 10px;*/
+      /*margin-bottom: 10px;*/
       border: 1px solid black;
       border-radius: 35px;
     }
 
     .login-form button {
       width: 100%;
-      padding: 10px;
+      /*padding: 10px;*/
       background-color: #d12d0d;
       color: #fff;
       border: none;
