@@ -1,6 +1,6 @@
 /* style is not changing after editing it */
     body {
-      background-color:#f62c2c;
+      background-color:#9B1D20; 
       font-family: Arial, sans-serif, Ageo;
       display: flex;
       justify-content: center;
@@ -60,7 +60,3 @@
       color: red;
       text-decoration: none;
     }
-    
-
-
-   

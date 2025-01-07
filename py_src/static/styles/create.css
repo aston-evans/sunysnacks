@@ -1,5 +1,5 @@
 body {
-    background-color: #f62c2c;
+    background-color: #9B1D20; 
     font-family: Arial, sans-serif;
     height: 100vh;
     display: flex;
@@ -14,8 +14,6 @@ body {
     border-radius: 10px;
     border: 100px; 
     max-width: 500px;
-    
-    
 }
 
 h1 {
@@ -31,32 +29,23 @@ form {
 }
 
 label {
-    /*display: block;*/
     margin-bottom: 5px;
     color: black;
-    /*padding: 8px;*/
     width: 100%;
 }
 
 input {
     width: 100%;
     padding: 8px;
-    margin-bottom: 10px;
     border: 1px solid black;
-    background-color: #d3d3d3;
-}
-.signUp {
-    
-    margin-right: -20px;
+    border-radius: 10px;
 }
 
-
-.signUp, .cancelButton {
+#signUp, #cancelButton {
     background-color: #d12d0d;
-    padding: 10px;
     color: #fff;
     font-size: 16px;
-    cursor: pointer;
+    border: 1px solid black;        
     
 }
 .buttonalign {
