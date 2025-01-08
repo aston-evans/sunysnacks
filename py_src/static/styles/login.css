@@ -44,7 +44,7 @@
     .login-form button {
       width: 100%;
       /*padding: 10px;*/
-      background-color: #d12d0d;
+      background-color: #9B1D20; 
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -57,6 +57,6 @@
     }*/
 
     .login-form a {
-      color: red;
+      color: #9B1D20; 
       text-decoration: none;
     }

@@ -42,8 +42,8 @@ input {
 }
 
 #signUp, #cancelButton {
-    background-color: #d12d0d;
-    color: #fff;
+    background-color: #9B1D20; 
+    color: white;
     font-size: 16px;
     border: 1px solid black;        
     
