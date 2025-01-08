@@ -1,17 +1,18 @@
 body,
 html {
     margin: 0;
-    padding: 0;
+    /*overflow: hidden;*/
 }
 
 body {
     font-family: Arial, sans-serif, Ageo;
     background-color: #9B1D20; 
+    
 }
 
 .header {
     text-align: center;
-    width: 100%;
+    
     background-color: #d3b88c;
     color: black;   
 }
@@ -27,41 +28,25 @@ body {
 #map{
     background-color: black;
     color: white;
-    border: 1px solid white;
-    border-radius: none;
-    padding: 12px;
     cursor: pointer;
 }
 
-#map {
-    margin-left: -5px;
-}
-
-#logout {
-    margin-right: 20px;
-}
 
 
 
-.content {
-    text-align: center;
-    padding: 20px;
-}
 
-.market-title {
-    margin-top: 20px;
+#location {
     color: white;
-    text-align: center;
 }
 
 .map-button {
     margin-right: 1px;
 }
 
-.review-button,
-.current-reviews-button {
+#review,
+#current{
     background-color: black;
-    color: #fff;
+    color: white;
     border: 10px;
     border-radius: 10px;
     padding: 15px 20px;
@@ -70,10 +55,19 @@ body {
 }
 
 
-.place {
-    margin-bottom: 2%;
+/*#logo {
+    height: 100%;
+    
+}*/
+
+header,footer {
+    position: fixed;
+    width: 100%;
 }
 
-img {
-    width:100px;
+header {
+    top: 0;
+}
+footer {
+    bottom: 0;
 }
