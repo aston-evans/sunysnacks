@@ -5,38 +5,52 @@
 <head>
   <title> {% block title %} { page_title } {% endblock %} - Leave a review </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
-  <link rel="stylesheet" href="../../static/styles/LeaveReview.css">
-  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', path='styles/LeaveReview.css') }} " />
+  <link rel="icon" href="../../static/images/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-  <h1> Leave a Review </h1>
-
-  <form method="post" action="/reviewcreate">
-    <h2>{% block h2 %} { h2_name } {% endblock %}</h2>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <div class="d-flex justify-content-center align-items-center p-2 header">
+    <h1><strong> Leave a Review </strong></h1>
+  </div>
+  <form class="my-5 pb-4" method="post" action="/reviewcreate">
+    <h2 class="text-center"><strong>{% block h2 %} { h2_name } {% endblock %}</strong></h2>
 
     <!--location_id-->
     {% block input %} { location_id } {% endblock %}
 
     <!-- Title-->
-    <label for="meal">What meal did you get?</label>
+    <label class="mt-3 d-block" for="meal"><strong>What meal did you get?</strong></label>
     <input type="text" id="meal" name="meal" placeholder="What did you eat?" required>
 
     <!-- Ratings -->
-    <label for="rating">How would you rate your experience on a scale of 1-5 (5 being the best)?</label>
-    <input id="rating" type="radio" name="stars" value="1" required>1
-    <input id="rating" type="radio" name="stars" value="2">2
-    <input id="rating" type="radio" name="stars" value="3">3
-    <input id="rating" type="radio" name="stars" value="4">4
-    <input id="rating" type="radio" name="stars" value="5">5
+    <label class="mt-3 d-block" for="rating"><strong>How would you rate your experience on a scale of 1-5 (5 being the
+        best)?</strong></label>
+    <input class="mr-1" id="rating" type="radio" name="stars" value="1" required>1
+    <input class="mr-1" id="rating" type="radio" name="stars" value="2">2
+    <input class="mr-1" id="rating" type="radio" name="stars" value="3">3
+    <input class="mr-1" id="rating" type="radio" name="stars" value="4">4
+    <input class="mr-1" id="rating" type="radio" name="stars" value="5">5
 
     <!--The post itself-->
-    <label for="body">Summarize your overall experience at {% block location %} {{ location_name }} {% endblock %}</label>
-    <textarea name="content" id="body" placeholder="Begin..." required></textarea>
+    <label class="mt-3 d-block" for="body"><strong>Summarize your overall experience at {% block location %} {{
+        location_name }} {% endblock
+        %}</strong></label>
+    <textarea class="mb-3" name="content" id="body" placeholder="Begin..." required></textarea>
 
-
-    <button class="end" id="submit" type="submit">Submit Review!</button>
-    <button class="end" id='cancel' onclick="location.href='/menu'">Cancel</button>
+    <button class="btn p-2" id="submit" type="submit">Submit Review!</button>
+    <button class="btn p-2" id='cancel' onclick="location.href='/menu'">Cancel</button>
 
 
   </form>
