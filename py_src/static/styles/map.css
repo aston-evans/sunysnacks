@@ -1,18 +1,9 @@
-body, html { 
-  margin: 0;
-}
 body {
     font-family: Arial, sans-serif;
-    background-color: #f62c2c;
+    background-color: #9B1D20; 
    
   }
 
-.img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 10px;
-}
   img {
   height: 100%;
   max-width: 800px;
@@ -20,23 +11,16 @@ body {
 }
 
 button {
-    
     background-color: black;
-    color: white;
-    border: 1px solid ;  
-    font-size: 16px; 
+    color: white; 
     border-radius: 5px; 
-    padding: 12px 12px; 
     cursor: pointer;
 
 }
 
-h1 {
-  margin: 5px 0;
-}
+
 .header {
-  text-align: center;
-  background-color: white;
+  background-color: #d3b88c;
   color: black;
   width: 100%;
 }
