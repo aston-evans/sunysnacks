@@ -1,11 +1,7 @@
 /* styles for the review section. Need to be edited
 current review section just has example inputs
 Review page standard*/
-body,
-html {
-  margin: 0;
-  padding: 0;
-}
+
 body {
   background-color:#9B1D20; 
 }
@@ -47,23 +43,17 @@ body {
 } */
 
 
-
 .header {
-  background-color: #ff0707;
-  color: white;
-  padding: 10px;
-  text-align: center;
+  background-color: #d3b88c;
+  color: black;
   font-family: Arial, sans-serif;
 
 }
 
-.nav {
-  background-color: white; 
-  color: #EE4B2B;
-  border: 1px solid black;
-  font-size: 16px;
+#menu {
+  background-color: black;
+  color: white;
   border-radius: 5px;
-  padding: 12px 24px;
   cursor: pointer;
-  font-weight: bold;
+  
 }
