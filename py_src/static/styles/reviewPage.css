@@ -6,43 +6,22 @@ body {
   background-color:#9B1D20; 
 }
 .review-section {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 30px;
   font-family: Arial, sans-serif;
 }
 
 .review {
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
   /*margin-bottom: 20px;*/
   max-width: 600px;
-  width: 100%;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  background-color:#d3b88c;
 }
-
-.review h3 {
-  font-size: 24px;
-
+#b {
+  background-color: #d3b88c;
 }
-
-.review p {
-  font-size: 18px;
-  margin-bottom: 0;
-  font-family: Arial, sans-serif;
-}
-
-/* Save this to apply to the reviewer from the db. 
-.review .reviewer {
-  font-style: italic;
-  margin-top: 10px;
-  font-family: Arial, sans-serif;
-} */
-
-
+  
 .header {
   background-color: #d3b88c;
   color: black;
