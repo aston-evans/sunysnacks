@@ -18,10 +18,15 @@ body {
   font-family: Arial, sans-serif;
   background-color:#d3b88c;
 }
-#b {
-  background-color: #d3b88c;
-}
-  
+
+/* Save this to apply to the reviewer from the db. 
+.review .reviewer {
+  font-style: italic;
+  margin-top: 10px;
+  font-family: Arial, sans-serif;
+} */
+
+
 .header {
   background-color: #d3b88c;
   color: black;
