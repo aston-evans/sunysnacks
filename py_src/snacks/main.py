@@ -1,12 +1,12 @@
 # trying to incorporate fastapi into the project.
 
 import os  # noqa
-import jwt #noqa
+import jwt  # noqa
 from fastapi import FastAPI, Request, Query, Depends, Form, HTTPException, status  # noqa: F401
 from fastapi.responses import HTMLResponse, RedirectResponse  # noqa
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from datetime import datetime, timedelta, timezone #noqa 
+from datetime import datetime, timedelta, timezone  # noqa
 from pydantic import BaseModel  # noqa: F401
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select  # noqa: F401
 from passlib.context import CryptContext  # noqa: F401
@@ -21,7 +21,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
 SECRET_KEY = "af842c14eb50cd7009202a3cdf0948122a325bed0f8fc4596035f8208fe57d9c"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
 
 
 class User(SQLModel, table=True):
@@ -57,9 +56,11 @@ class Location(SQLModel, table=True):
     name: str = Field(default=None, nullable=False, index=True)
     reviews: list["Review"] = Relationship(back_populates="location")
 
+
 class Token(BaseModel):
-    access_token: str 
-    token_type: str 
+    access_token: str
+    token_type: str
+
 
 class TokenData(BaseModel):
     username: str | None = None
@@ -74,6 +75,7 @@ def get_session():
     with Session(engine) as session:
         yield session
 
+
 # for has passwords
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -86,16 +88,21 @@ def get_hashpwd(password):
 def get_user(db: Session = Depends(get_session), username: str = None):
     return db.exec(select(User).where(User.username == username)).first()
 
+
 def verify_password(plain_password, hashed_pwd):
     return pwd_context.verify(plain_password, hashed_pwd)
 
-def authenticate_user(db: Session = Depends(get_session), username: str = None, password: str = None):
+
+def authenticate_user(
+    db: Session = Depends(get_session), username: str = None, password: str = None
+):
     user = get_user(db, username)
     if not user:
-        return False # error or something of the sort.
+        return False  # error or something of the sort.
     if not verify_password(password, user.password):
         return False
     return user
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     encode = data.copy()
@@ -107,7 +114,10 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     encoded_jwt = jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def current_user(token: str =  Depends(oauth2_scheme), db: Session = Depends(get_session)):
+
+def current_user(
+    token: str = Depends(oauth2_scheme), db: Session = Depends(get_session)
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -126,20 +136,32 @@ def current_user(token: str =  Depends(oauth2_scheme), db: Session = Depends(get
         raise credentials_exception
     return user
 
+
 @app.post("/signin", response_model=Token)
-async def signin(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_session)):
-    user = authenticate_user(db, form_data.username, form_data.password) 
+async def signin(
+    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_session)
+):
+    user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate": "Bearer"})
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
     response = RedirectResponse(url="/menu", status_code=status.HTTP_302_FOUND)
     response.set_cookie(key="access_token", value=access_token, httponly=True)
     return response
-'''@app.get("/signin", response_class=HTMLResponse)
+
+
+"""@app.get("/signin", response_class=HTMLResponse)
 async def test(request: Request):
     return templates.TemplateResponse("menu.html", {"request": request})
-'''
+"""
+
 
 @app.post("/register")
 async def register(
@@ -154,14 +176,14 @@ async def register(
             status_code=status.HTTP_409_CONFLICT,
             detail="Username already exists",
         )
-        #password with hash
+        # password with hash
     hashed_pwd = pwd_context.hash(password)
     new_user = User(username=username, password=hashed_pwd)
-    #new_user = User(username=username, password=password) #without hash
+    # new_user = User(username=username, password=password) #without hash
     db.add(new_user)
     db.commit()
 
-    return RedirectResponse(url="auth/login", status_code=303) 
+    return RedirectResponse(url="auth/login", status_code=303)
 
 
 # attempting to create a proper link to the right review page depending on what the user clicks.
@@ -236,9 +258,10 @@ async def login(request: Request, q: None = None):
     return templates.TemplateResponse("auth/login.html", {"request": request, "q": q})
 
 
-@app.get("/menu", response_class=HTMLResponse)
+"""@app.get("/menu", response_class=HTMLResponse)
 async def main(request: Request, q: None = None):
     return templates.TemplateResponse("menu.html", {"request": request, "q": q})
+"""
 
 
 @app.get("/create", response_class=HTMLResponse)
@@ -288,6 +311,29 @@ async def wilsLeave(request: Request):
 
 
 # reviewP is the route for the entire review pages
+@app.get("/menu", response_class=HTMLResponse)
+async def allreviews(request: Request, db: Session = Depends(get_session)):
+    reviews = db.exec(
+        select(Review, User, Location)
+        .join(User, Review.author_id == User.user_id)
+        .join(Location, Review.location_id == Location.location_id)
+    ).all()
+    allreviews = []
+    for review, user, location in reviews:
+        allreviews.append(
+            { 
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "author": user.username,
+                "location": location.name,
+            }
+        )
+    return templates.TemplateResponse(
+        "menu.html", {"request": request, "reviews": allreviews}
+    )
+
+
 @app.get("/reviewP/argoReview", response_class=HTMLResponse)
 async def argoReview(request: Request, db: Session = Depends(get_session)):
     reviews = db.exec(
