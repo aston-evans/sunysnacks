@@ -1,9 +1,7 @@
-body,
-html {
-    margin: 0;
-    /*overflow: hidden;*/
-}
 
+html, body {
+    height: 100%;
+}
 body {
     font-family: Arial, sans-serif, Ageo;
     background-color: #9B1D20; 
@@ -16,58 +14,19 @@ body {
     background-color: #d3b88c;
     color: black;   
 }
-
-/*.title {
-            
-    margin-top: 10px;
-            margin-right: 15px;
-           
-}*/
-
-#logout,
-#map{
-    background-color: black;
-    color: white;
-    cursor: pointer;
-}
-
-
-
-
-
-#location {
-    color: white;
-}
-
-.map-button {
-    margin-right: 1px;
-}
-
-#review,
-#current{
-    background-color: black;
-    color: white;
-    border: 10px;
+.review {
+    border: 2px solid black;
     border-radius: 10px;
-    padding: 15px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-}
+    /*margin-bottom: 20px;*/
+    max-width: 400px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color:#d3b88c;
+  }
 
 
-/*#logo {
-    height: 100%;
-    
-}*/
 
-header,footer {
-    position: fixed;
-    width: 100%;
-}
 
-header {
-    top: 0;
-}
 footer {
     bottom: 0;
 }
