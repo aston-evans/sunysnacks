@@ -53,7 +53,17 @@
     </ul>
   </div>
 
-<!--going to add some reviews here. -->
+  <div class="d-flex flex-wrap flex-row justify-content-center align-items-center mx-5 mt-3 ">
+    {% for review in reviews %}
+    <article class="w-75 review p-2 ">
+      <h4 class="text-capitalize fw-bold">{{ review.location }}</h4> <!--going to bold this later and make the font bigger-->
+      <hr class="bg-dark">
+      <p class="fst-italic fs-6"> {{ review.rating }}/5 stars </p>
+      <p class="fw-bold mb-0"> {{ review.title }} </p>
+      <p class="fs-5 mt-1">{{ review.body }} <i>by {{ review.author }}</i></p>
+       <!--at {{ review.created }} adding this later -->
+    </article>
+    {% endfor %}  
 
 
   <!-- navbar bootstrap... unsure how to use it
