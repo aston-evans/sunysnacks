@@ -4,6 +4,7 @@ Review page standard*/
 
 body {
   background-color:#9B1D20; 
+  font-family: Arial, sans-serif, Ageo;
 }
 .review-section {
   font-family: Arial, sans-serif;
@@ -13,7 +14,7 @@ body {
   border: 2px solid black;
   border-radius: 10px;
   /*margin-bottom: 20px;*/
-  max-width: 600px;
+  max-width: 500px;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
   background-color:#d3b88c;
@@ -27,12 +28,6 @@ body {
 } */
 
 
-.header {
-  background-color: #d3b88c;
-  color: black;
-  font-family: Arial, sans-serif;
-
-}
 
 #menu {
   background-color: black;
@@ -40,4 +35,12 @@ body {
   border-radius: 5px;
   cursor: pointer;
   
+}
+
+.navbar-custom {
+  background-color: #d3b88c;
+}
+
+.bg-custom {
+  background-color: #d3b88c;
 }
