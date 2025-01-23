@@ -14,17 +14,16 @@
 
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!--header // want to add navbar bootstrap later on-->
-  <!--adding active later on. and adjusting nav-pills to show active.-->
-  <div class="container-fluid header p-2 ">
-    <ul class="nav justify-content-end">
+  <!--header/Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-custom bg-custom">
+  <div class="container-fluid p-1">
+    <ul class="navbar-nav">
       <li class="nav-item custom">
         <a class="nav-link text-black custom fw-bold" href="/menu"> Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-black fw-bold" href="/map"> Campus Map</a>
       </li>
-
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
           aria-expanded="false">Create Review</a>
@@ -52,18 +51,49 @@
     </li>
     </ul>
   </div>
+  </nav>
+  
+  <!-- Main page-->
+  <div class="carousel slide" id="carouselautoplay" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/OneontaScenery.jpg" alt="Scenery">
+      </div>
+      <div class="carousel-item ">
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/millsmarketplace.jpg" alt="marketplace">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/seasons.jpg" alt="seasons">
+      </div>
+      <div class="carousel-item"> 
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/wilsbachdininghall.jpg" alt="Wilsbach Dining Hall">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/ArgoTea.jpg" alt="Argo Tea"> 
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselautoplay" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden"> Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselautoplay" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden"> Next</span>
+    </button>
+  </div>
+  
+  
   <div class="container text-center my-3">
     <h3 class="fw-bold">Recent Reviews</h3>
   </div>
   <div class="container">
-    <div class="row row-cols-3 ">
+    <div class="row row-cols-3">
       {% for review in reviews %}
       <div class="col d-flex justify-content-center mb-1">
         <article class="w-75 review p-2">
           <h4 class="text-capitalize fw-bold">{{ review.location }}</h4>
-          <!--going to bold this later and make the font bigger-->
-          <hr class="bg-dark">
-          <p class="fst-italic fs-6"> {{ review.rating }}/5 stars </p>
+          <hr class="bg-dark my-0">
+          <p class="fst-italic fs-6 "> {{ review.rating }}/5 stars </p>
           <p class="fw-bold mb-0"> {{ review.title }} </p>
           <p class="fs-5 mt-1">{{ review.body }} <i>by {{ review.author }}</i></p>
           <!--at {{ review.created }} adding this later -->
@@ -74,11 +104,13 @@
     </div>
   </div>
 
+  
+
 
 
   <!--<footer class="sticky-bottom">
     <img class="img-fluid" src="../../static/images/favicon.ico" alt="logo">
-  </footer> --> 
+  </footer> -->
 </body>
 
 </html>
