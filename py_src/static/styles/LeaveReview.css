@@ -69,3 +69,8 @@ input[type="file"] {
 ::placeholder {
   font-family: Arial;
 }
+
+
+.navbar-custom {
+  background-color: #d3b88c;
+}
