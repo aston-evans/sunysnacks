@@ -8,12 +8,6 @@ body {
     
 }
 
-.header {
-    text-align: center;
-    
-    background-color: #d3b88c;
-    color: black;   
-}
 .review {
     border: 2px solid black;
     border-radius: 10px;
@@ -29,4 +23,13 @@ body {
 
 footer {
     bottom: 0;
+}
+
+.navbar-custom {
+    background-color: #d3b88c;
+}
+
+.carousel-item img {
+    height: 500px;
+    object-fit: contain;
 }
