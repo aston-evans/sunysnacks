@@ -21,8 +21,25 @@
         <li class="nav-item custom">
           <a class="nav-link text-black custom fw-bold" href="/menu"> Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-black fw-bold" href="/map"> Campus Map</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+            aria-expanded="false">Campus Map</a>
+          <ul class="dropdown-menu bg-secondary">
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'04.3%22N+75%C2%B003'43.5%22W/@42.467861,-75.062069,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.467861!4d-75.062069?entry=ttu&g_ep=EgoyMDI1MDEyNi4wIKXMDSoASAFQAw%3D%3D">Argo
+                Tea</a></li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'07.5%22N+75%C2%B003'38.2%22W/@42.468741,-75.060596,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.468741!4d-75.060596?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D">Mills
+                Marketplace</a></li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/search/?api=1&query=42.468741,-75.060596">Mills Dining Hall</a></li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'<!-- 1 -->3.2%22N+75%C2%B003'45.6%22W/@42.470332,-75.062667,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.470332!4d-75.062667?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D">Seasons</a>
+            </li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'07.6%22N+75%C2%B003'37.5%22W/@42.468781,-75.060411,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.468781!4d-75.060411?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D">Wilsbach
+                Dining Hall</a></li>
+          </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
@@ -72,8 +89,8 @@
       {% endfor %}
     </div>
     <h3 class="text-center fw-bold my-5"> A little bit about {% block place %} {{ place }} {% endblock %}</h3> 
-    <div class="grid row gap-0 row-gap-3 mb-5">
-      <div class="col d-flex justify-content-center">
+    <div class="grid row gap-0 row-gap-3 mb-5 align-items-start">
+      <div class="col d-flex  justify-content-center">
       <div class="card bg-custom" style="width: 18rem;">
         <div class="card-header fw-bold">Hours of operations
         </div>
@@ -88,7 +105,7 @@
           <div class="card-header fw-bold">Description of food/content 
           </div>
           <div class="card-body">
-            <p class="card-text"> ^^</p> <!-- this will become a jinja template.-->
+            <p class="card-text"> {% block description %} {{ description }} {% endblock %}</p> <!-- this will become a jinja template.-->
           </div>
         </div>
         
@@ -99,8 +116,9 @@
             <div class="card-header fw-bold">Visit their socials 
             </div>
             <div class="card-body">
-              <p class="card-text"> Instagram link to sodexo, link to their website, reddit?googlereviews?youtube?</p>
-               <!-- this will become a jinja template.-->
+               {% block socials %} {{ socials }} {% endblock %}
+                
+    
             </div>
           </div>
           
