@@ -268,12 +268,6 @@ async def main(request: Request, q: None = None):
 async def create(request: Request, q: None = None):
     return templates.TemplateResponse("auth/create.html", {"request": request, "q": q})
 
-
-@app.get("/map", response_class=HTMLResponse)
-async def map(request: Request):
-    return templates.TemplateResponse("map.html", {"request": request})
-
-
 # createR is the route for the leave review pages
 @app.get("/createR/argoLeaveReview", response_class=HTMLResponse)
 async def argoLeave(request: Request):
