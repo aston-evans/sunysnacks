@@ -47,30 +47,67 @@
         </li>
       </ul>
       <li class="nav-item">
-        <a class="nav-link text-black fw-bold" href="auth/login"> Log out</a>
+        <a class="nav-link text-black fw-bold" href="../auth/login"> Log out</a>
       </li>
       </ul>
     </div>
-    </nav>
-  <div> <!--going to add stuff to this. -->
-  <div class="container">
-    <div class="row row-cols-3">
+  </nav>
+  <!--content-->
+  <div class="container border-transparent p-3 bg-secondary "> 
+    <h3 class="text-center fw-bold mb-5">{% block location %} {{ location }} {% endblock %} current reviews </h3>
+    <div class="grid row gap-0 row-gap-3">
       {% for review in reviews %}
-      <div class="col d-flex justify-content-center mb-1">
-        <article class="w-75 review p-2">
+      <div class="col d-flex justify-content-center">
+      <div class="card bg-custom" style="width: 18rem;">
+        <div class="card-header">
           <h4 class="text-capitalize fw-bold">{{ review.title }}</h4>
-          <!--going to bold this later and make the font bigger-->
-          <hr class="bg-dark">
-          <p class="fst-italic fs-6"> {{ review.rating }}/5 stars </p>
-          <p class="fs-5 mt-1">{{ review.body }} <i>by {{ review.author }}</i></p>
-          <!--at {{ review.created }} adding this later -->
-        </article>
+        </div>
+      <div class="card-body">
+        <p class="card-text fst-italic fs-6"> {{ review.rating }}/5 stars</p>
+        <p class="card-text fs-5 mt-1"> {{review.body }} <i> by {{review.author}}</i></p>
+        </div>
       </div>
+      </div>
+  
       {% endfor %}
-
+    </div>
+    <h3 class="text-center fw-bold my-5"> A little bit about {% block place %} {{ place }} {% endblock %}</h3> 
+    <div class="grid row gap-0 row-gap-3 mb-5">
+      <div class="col d-flex justify-content-center">
+      <div class="card bg-custom" style="width: 18rem;">
+        <div class="card-header fw-bold">Hours of operations
+        </div>
+        <div class="card-body">
+          <p class="card-text"> {% block time %} {{ time }} {% endblock %}</p> 
+        </div>
+      </div>
+      
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div class="card bg-custom" style="width: 18rem;">
+          <div class="card-header fw-bold">Description of food/content 
+          </div>
+          <div class="card-body">
+            <p class="card-text"> ^^</p> <!-- this will become a jinja template.-->
+          </div>
+        </div>
+        
+        </div>
+        
+        <div class="col d-flex justify-content-center">
+          <div class="card bg-custom" style="width: 18rem;">
+            <div class="card-header fw-bold">Visit their socials 
+            </div>
+            <div class="card-body">
+              <p class="card-text"> Instagram link to sodexo, link to their website, reddit?googlereviews?youtube?</p>
+               <!-- this will become a jinja template.-->
+            </div>
+          </div>
+          
+          </div>
     </div>
   </div>
-
+  
 </body>
 
 </html>
