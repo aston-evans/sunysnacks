@@ -16,60 +16,78 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!--header/Navbar-->
   <nav class="navbar navbar-expand-lg navbar-custom bg-custom">
-  <div class="container-fluid p-1">
-    <ul class="navbar-nav">
-      <li class="nav-item custom">
-        <a class="nav-link text-black custom fw-bold" href="/menu"> Home</a>
-      </li>
+    <div class="container-fluid p-1">
+      <ul class="navbar-nav">
+        <li class="nav-item custom">
+          <a class="nav-link text-black custom fw-bold" href="/menu"> Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+            aria-expanded="false">Campus Map</a>
+          <ul class="dropdown-menu bg-secondary">
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'04.3%22N+75%C2%B003'43.5%22W/@42.467861,-75.062069,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.467861!4d-75.062069?entry=ttu&g_ep=EgoyMDI1MDEyNi4wIKXMDSoASAFQAw%3D%3D">Argo
+                Tea</a></li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'07.5%22N+75%C2%B003'38.2%22W/@42.468741,-75.060596,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.468741!4d-75.060596?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D">Mills
+                Marketplace</a></li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/search/?api=1&query=42.468741,-75.060596">Mills Dining Hall</a></li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'<!-- 1 -->3.2%22N+75%C2%B003'45.6%22W/@42.470332,-75.062667,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.470332!4d-75.062667?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D">Seasons</a>
+            </li>
+            <li> <a class="dropdown-item" target="_blank"
+                href="https://www.google.com/maps/place/42%C2%B028'07.6%22N+75%C2%B003'37.5%22W/@42.468781,-75.060411,17z/data=!3m1!4b1!4m4!3m3!8m2!3d42.468781!4d-75.060411?entry=ttu&g_ep=EgoyMDI1MDEyMi4wIKXMDSoASAFQAw%3D%3D">Wilsbach
+                Dining Hall</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+            aria-expanded="false">Create Review</a>
+          <ul class="dropdown-menu bg-secondary">
+            <li> <a class="dropdown-item" href="/createR/argoLeaveReview">Argo Tea</a></li>
+            <li> <a class="dropdown-item" href="/createR/marketLeaveReview">Mills Marketplace</a></li>
+            <li> <a class="dropdown-item" href="/createR/millsLeaveReview">Mills Dining Hall</a></li>
+            <li> <a class="dropdown-item" href="/createR/seasonsLeaveReview">Seasons </a></li>
+            <li> <a class="dropdown-item" href="/createR/wilsLeaveReview"> Wilsbach Dining Hall</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+            aria-expanded="false"> Current Reviews</a>
+          <ul class="dropdown-menu bg-secondary">
+            <li> <a class="dropdown-item" href="/reviewP/argoReview">Argo Tea</a></li>
+            <li> <a class="dropdown-item" href="/reviewP/marketReview">Mills Marketplace</a></li>
+            <li> <a class="dropdown-item" href="/reviewP/millsReview">Mills Dining Hall</a></li>
+            <li> <a class="dropdown-item" href="/reviewP/seasonsReview">Seasons </a></li>
+            <li> <a class="dropdown-item" href="/reviewP/wilsReview"> Wilsbach Dining Hall</a></li>
+        </li>
+      </ul>
       <li class="nav-item">
-        <a class="nav-link text-black fw-bold" href="/map"> Campus Map</a>
+        <a class="nav-link text-black fw-bold" href="auth/login"> Log out</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
-          aria-expanded="false">Create Review</a>
-        <ul class="dropdown-menu bg-secondary">
-          <li> <a class="dropdown-item" href="/createR/argoLeaveReview">Argo Tea</a></li>
-          <li> <a class="dropdown-item" href="/createR/marketLeaveReview">Mills Marketplace</a></li>
-          <li> <a class="dropdown-item" href="/createR/millsLeaveReview">Mills Dining Hall</a></li>
-          <li> <a class="dropdown-item" href="/createR/seasonsLeaveReview">Seasons </a></li>
-          <li> <a class="dropdown-item" href="/createR/wilsLeaveReview"> Wilsbach Dining Hall</a></li>
-        </ul>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
-          aria-expanded="false"> Current Reviews</a>
-        <ul class="dropdown-menu bg-secondary">
-          <li> <a class="dropdown-item" href="/reviewP/argoReview">Argo Tea</a></li>
-          <li> <a class="dropdown-item" href="/reviewP/marketReview">Mills Marketplace</a></li>
-          <li> <a class="dropdown-item" href="/reviewP/millsReview">Mills Dining Hall</a></li>
-          <li> <a class="dropdown-item" href="/reviewP/seasonsReview">Seasons </a></li>
-          <li> <a class="dropdown-item" href="/reviewP/wilsReview"> Wilsbach Dining Hall</a></li>
-      </li>
-    </ul>
-    <li class="nav-item">
-      <a class="nav-link text-black fw-bold" href="auth/login"> Log out</a>
-    </li>
-    </ul>
-  </div>
+      </ul>
+    </div>
   </nav>
-  
+
   <!-- Main page-->
   <div class="carousel slide" id="carouselautoplay" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img class="d-block w-100 object-fit-fill" src="../../static/images/OneontaScenery.jpg" alt="Scenery">
       </div>
-      <div class="carousel-item ">
+      <div class="carousel-item">
         <img class="d-block w-100 object-fit-fill" src="../../static/images/millsmarketplace.jpg" alt="marketplace">
       </div>
       <div class="carousel-item">
         <img class="d-block w-100 object-fit-fill" src="../../static/images/seasons.jpg" alt="seasons">
       </div>
-      <div class="carousel-item"> 
-        <img class="d-block w-100 object-fit-fill" src="../../static/images/wilsbachdininghall.jpg" alt="Wilsbach Dining Hall">
+      <div class="carousel-item">
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/wilsbachdininghall.jpg"
+          alt="Wilsbach Dining Hall">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100 object-fit-fill" src="../../static/images/ArgoTea.jpg" alt="Argo Tea"> 
+        <img class="d-block w-100 object-fit-fill" src="../../static/images/ArgoTea.jpg" alt="Argo Tea">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselautoplay" data-bs-slide="prev">
@@ -81,8 +99,8 @@
       <span class="visually-hidden"> Next</span>
     </button>
   </div>
-  
-  
+
+
   <div class="container text-center my-3">
     <h3 class="fw-bold">Recent Reviews</h3>
   </div>
@@ -98,13 +116,13 @@
           <p class="fs-5 mt-1">{{ review.body }} <i>by {{ review.author }}</i></p>
           <!--at {{ review.created }} adding this later -->
         </article>
-        </div>
-        {% endfor %}
-     
+      </div>
+      {% endfor %}
+
     </div>
   </div>
 
-  
+
 
 
 
