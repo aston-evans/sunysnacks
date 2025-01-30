@@ -15,14 +15,14 @@
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!--header/Navbar-->
-  <nav class="navbar navbar-expand-lg navbar-custom bg-custom">
+  <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid p-1">
       <ul class="navbar-nav">
         <li class="nav-item custom">
-          <a class="nav-link text-black custom fw-bold" href="/menu"> Home</a>
+          <a class="nav-link text-white custom fw-bold" href="/menu"> Home</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+          <a class="nav-link dropdown-toggle text-white fw-bold" data-bs-toggle="dropdown" role="button"
             aria-expanded="false">Campus Map</a>
           <ul class="dropdown-menu bg-secondary">
             <li> <a class="dropdown-item" target="_blank"
@@ -42,7 +42,7 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+          <a class="nav-link dropdown-toggle text-white fw-bold" data-bs-toggle="dropdown" role="button"
             aria-expanded="false">Create Review</a>
           <ul class="dropdown-menu bg-secondary">
             <li> <a class="dropdown-item" href="/createR/argoLeaveReview">Argo Tea</a></li>
@@ -53,7 +53,7 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-black fw-bold" data-bs-toggle="dropdown" role="button"
+          <a class="nav-link dropdown-toggle text-white fw-bold" data-bs-toggle="dropdown" role="button"
             aria-expanded="false"> Current Reviews</a>
           <ul class="dropdown-menu bg-secondary">
             <li> <a class="dropdown-item" href="/reviewP/argoReview">Argo Tea</a></li>
@@ -64,7 +64,7 @@
         </li>
       </ul>
       <li class="nav-item">
-        <a class="nav-link text-black fw-bold" href="auth/login"> Log out</a>
+        <a class="nav-link text-white fw-bold" href="auth/login"> Log out</a>
       </li>
       </ul>
     </div>
@@ -100,35 +100,61 @@
     </button>
   </div>
 
-
   <div class="container text-center my-3">
-    <h3 class="fw-bold">Recent Reviews</h3>
+    <div class="d-flex justify-content-center">
+      <div class="card bg-custom w-100 text-white">
+        <div class="card-header">
+          <h1>A Look at SUNY Oneonta Campus Food and Dining Options</h1>
+
+        </div>
+        <div class="card-body fs-5">
+          <p class="card-text">
+            SUNY Oneonta’s dining facilities provide a range of meal options designed to cater to students’ diverse
+            tastes and dietary needs. The main dining hall, The Marketplace, serves a variety of all-you-can-eat meals
+            with stations offering fresh-made dishes, salads, hot entrees, and more. In addition, the campus features
+            other dining locations offering convenience for students on the go, such as cafes, food courts, and
+            grab-and-go options. The food includes a mix of traditional favorites and healthier, customizable choices,
+            with options available for vegetarian, vegan, and gluten-free diets. Overall, the dining services aim to
+            provide convenient, tasty, and flexible meal choices for students.</p>
+        </div>
+      </div>
+    </div>
+    <h3 class="fw-bold my-3">Recent Reviews</h3>
   </div>
   <div class="container">
     <div class="row row-cols-3">
       {% for review in reviews %}
-      <div class="col d-flex justify-content-center mb-1">
-        <article class="w-75 review p-2">
-          <h4 class="text-capitalize fw-bold">{{ review.location }}</h4>
-          <hr class="bg-dark my-0">
-          <p class="fst-italic fs-6 "> {{ review.rating }}/5 stars </p>
-          <p class="fw-bold mb-0"> {{ review.title }} </p>
-          <p class="fs-5 mt-1">{{ review.body }} <i>by {{ review.author }}</i></p>
-          <!--at {{ review.created }} adding this later -->
-        </article>
+      <div class="col d-flex justify-content-center">
+        <div class="card bg-custom mb-1 text-white" style="width: 18rem;">
+          <div class="card-header">
+            <h4 class="text-capitalize fw-bold">{{ review.location }}</h4>
+          </div>
+          <div class="card-body">
+            <p class="card-text fst-italic fs-6"> {{ review.rating }}/5 stars</p>
+            <p class="fw-bold mb-0 "> {{ review.title }} </p>
+            <p class="card-text  mt-1"> {{review.body }} <i> by {{review.author}}</i></p>
+          </div>
+        </div>
       </div>
+
       {% endfor %}
 
     </div>
   </div>
 
+  <footer class="navbar-custom text-white text-center py-3 mt-5">
+    <div class="container">
+      <p class="fs-4 mb-3">For more details about the dining options, click the link below:</p>
+      <a href="https://oneonta.sodexomyway.com/en-us/" target="_blank" class="text-white fs-3 fw-bold text-decoration-none">
+        SUNY Oneonta official dining option website
+      </a>
+    </div>
+  </footer>
 
 
 
 
-  <!--<footer class="sticky-bottom">
-    <img class="img-fluid" src="../../static/images/favicon.ico" alt="logo">
-  </footer> -->
+    
 </body>
 
 </html>
