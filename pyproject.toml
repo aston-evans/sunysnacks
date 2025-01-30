@@ -52,3 +52,19 @@ packages = [
 include = [
     "py_src/snacks",
 ]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py39"
+
+
+[tool.ruff.lint]
+extend-select = [
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["sunysnacks"]
+
+[tool.ruff.lint.pylint]
+max-args = 7
