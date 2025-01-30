@@ -1,11 +1,29 @@
 /* styles for the review section. Need to be edited
 current review section just has example inputs
 Review page standard*/
-
 body {
-  background-color:#9B1D20; 
-  font-family: Arial, sans-serif, Ageo;
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  font-family: Arial, sans-serif, Ageo; 
 }
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10rem;
+}
+
+
+/*body {
+  min-height: 100vh;
+  margin: 0; 
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}*/
+
+
 .review-section {
   font-family: Arial, sans-serif;
 }
@@ -17,7 +35,7 @@ body {
   max-width: 500px;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background-color:#d3b88c;
+  background-color: #c41e3d;
 }
 
 /* Save this to apply to the reviewer from the db. 
@@ -28,19 +46,24 @@ body {
 } */
 
 
-
 #menu {
   background-color: black;
-  color: white;
+  color: #d3b88c;
   border-radius: 5px;
   cursor: pointer;
-  
+
 }
 
 .navbar-custom {
-  background-color: #d3b88c;
+  background-color: #c41e3d;
+  /*d3b88c; */
+}
+
+
+.bg-box {
+  background-color: #c41e3d;
 }
 
 .bg-custom {
-  background-color: #d3b88c;
+  background-color: #26619c;
 }

@@ -1,6 +1,6 @@
 /* style is not changing after editing it */
     body {
-      background-color:#9B1D20; 
+      background-color:#c41e3d; 
       font-family: Arial, sans-serif, Ageo;
       display: flex;
       justify-content: center;
@@ -11,11 +11,6 @@
       
     }
     
-    /*img {
-      width: 200px;
-      margin-bottom: 20px;
-     
-    }*/
     
     
     .login-form {
@@ -44,7 +39,7 @@
     .login-form button {
       width: 100%;
       /*padding: 10px;*/
-      background-color: #9B1D20; 
+      background-color: #c41e3d; 
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -57,6 +52,6 @@
     }*/
 
     .login-form a {
-      color: #9B1D20; 
+      color: #c41e3d;
       text-decoration: none;
     }

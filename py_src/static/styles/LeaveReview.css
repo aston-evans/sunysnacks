@@ -1,27 +1,22 @@
 /* Standard for the leave review page.*/
 
 body {
-  background-color: #9B1D20;
   font-family: Arial, sans-serif;
-
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  position: relative;
+  font-family: Arial, sans-serif, Ageo; 
 }
+  
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10rem;
+  }
 
-.header {
-  background-color: #d3b88c;
-  width: 100%;
-}
 
-h1 {
-  color: black;
-}
-
-h2 {
-  color: #9B1D20;
-}
-
-label {
-  color: #9B1D20;
-}
 
 
 input[type="text"],
@@ -42,29 +37,24 @@ textarea {
 form {
   max-width: 600px;
   margin: 0 auto;
-  background-color: white;
+  background-color: #26619c !important;
   border: 1px solid black;
   padding: 25px;
   border-radius: 5px;
 
 }
 
-input[type="file"] {
-  margin-top: 15px;
-}
 
+
+#submit, #cancel {
+  background-color: #26619c;
+  border: 1px solid black;
+  
+}
 #submit {
-  background-color: #9B1D20;
-  color: white;
-  border: 1px solid black;
-  float: right;
+  float: right; 
 }
 
-#cancel {
-  background-color: #9B1D20;
-  color: white;
-  border: 1px solid black;
-}
 
 ::placeholder {
   font-family: Arial;
@@ -72,5 +62,6 @@ input[type="file"] {
 
 
 .navbar-custom {
-  background-color: #d3b88c;
+  background-color: #c41e3d;
 }
+

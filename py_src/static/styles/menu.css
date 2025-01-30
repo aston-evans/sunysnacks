@@ -4,8 +4,6 @@ html, body {
 }
 body {
     font-family: Arial, sans-serif, Ageo;
-    background-color: #9B1D20; 
-    
 }
 
 .review {
@@ -15,21 +13,23 @@ body {
     max-width: 400px;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
-    background-color:#d3b88c;
+    background-color:#c41e3d;
   }
-
-
-
 
 footer {
     bottom: 0;
 }
 
 .navbar-custom {
-    background-color: #d3b88c;
+    background-color: #c41e3d;
+    /*E30022  D52941*/
 }
 
 .carousel-item img {
     height: 500px;
     object-fit: contain;
+}
+
+.bg-custom {
+    background-color: #26619c;
 }
