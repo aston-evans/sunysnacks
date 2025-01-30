@@ -85,10 +85,11 @@ def get_hashpwd(password):
     return pwd_context.hash(password)
 
 
+#find user
 def get_user(db: Session = Depends(get_session), username: str = None):
     return db.exec(select(User).where(User.username == username)).first()
 
-
+#verify pwd = hashed pwd
 def verify_password(plain_password, hashed_pwd):
     return pwd_context.verify(plain_password, hashed_pwd)
 
@@ -157,10 +158,7 @@ async def signin(
     return response
 
 
-"""@app.get("/signin", response_class=HTMLResponse)
-async def test(request: Request):
-    return templates.TemplateResponse("menu.html", {"request": request})
-"""
+
 
 
 @app.post("/register")
