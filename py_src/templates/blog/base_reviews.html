@@ -70,12 +70,12 @@
     </div>
   </nav>
   <!--content-->
-  <div class="container border p-3 bg-box"> 
+  <div class="container border p-3 bg-custom"> 
     <h3 class="text-center fw-bold mb-5 text-white">{% block location %} {{ location }} {% endblock %} current reviews </h3>
     <div class="grid row gap-0 row-gap-3">
       {% for review in reviews %}
       <div class="col d-flex justify-content-center">
-      <div class="card bg-custom" style="width: 18rem;">
+      <div class="card bg-box" style="width: 18rem;">
         <div class="card-header">
           <h4 class="text-capitalize text-white fw-bold">{{ review.title }}</h4>
         </div>
@@ -91,7 +91,7 @@
     <h3 class="text-center fw-bold my-5 text-white"> A little bit about {% block place %} {{ place }} {% endblock %}</h3> 
     <div class="grid row gap-0 row-gap-3 mb-5 align-items-start">
       <div class="col d-flex  justify-content-center">
-      <div class="card bg-custom" style="width: 18rem;">
+      <div class="card bg-box" style="width: 18rem;">
         <div class="card-header fw-bold text-white">Hours of operations
         </div>
         <div class="card-body">
@@ -101,7 +101,7 @@
       
       </div>
       <div class="col d-flex justify-content-center">
-        <div class="card bg-custom" style="width: 18rem;">
+        <div class="card bg-box" style="width: 18rem;">
           <div class="card-header fw-bold text-white">Description of food/content 
           </div>
           <div class="card-body">
@@ -112,7 +112,7 @@
         </div>
         
         <div class="col d-flex justify-content-center">
-          <div class="card bg-custom" style="width: 18rem;">
+          <div class="card bg-box" style="width: 18rem;">
             <div class="card-header fw-bold text-white">Visit their socials 
             </div>
             <div class="card-body text-white">
@@ -125,7 +125,7 @@
           </div>
     </div>
   </div>
-  <footer class="bg-custom text-white text-center py-3 mt-5">
+  <footer class="navbar-custom text-white text-center py-3 mt-5">
   <div class="container">
     <p class="fs-4 mb-3">For more details about the dining options, click the link below:</p>
     <a href="https://oneonta.sodexomyway.com/en-us/" target="_blank" class="text-white fs-3 fw-bold text-decoration-none">
