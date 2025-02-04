@@ -1,21 +1,23 @@
 {
     "configurations": [
         {
-            "name": "Python Debugger: Flask",
+            "name": "Python Debugger: FastAPI",
             "type": "debugpy",
             "request": "launch",
-            "module": "flask",
-            "env": {
-                "FLASK_APP": "py_src/flaskr/__init__.py",
-                "FLASK_DEBUG": "1"
-            },
+            "module": "uvicorn",
             "args": [
-                "run",
-                "--no-debugger",
-                "--no-reload"
+                "snacks.main:app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000",
+                "--reload"
             ],
+            "env": {
+                "UVICORN_WORKERS": "1"
+            },
             "jinja": true,
             "justMyCode": true
-        },
+        }
     ]
 }
