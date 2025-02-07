@@ -86,7 +86,7 @@ async def all_reviews(request: Request, db: Session = Depends(get_session)):
     )
 
 
-router.get("/reviewP/argoReview", response_class=HTMLResponse)
+@router.get("/reviewP/argoReview", response_class=HTMLResponse)
 async def argo_review(request: Request, db: Session = Depends(get_session)):
     reviews = db.exec(
         select(Review, User)
