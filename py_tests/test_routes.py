@@ -65,7 +65,7 @@ def client_fixture(session: Session):
     app.dependency_overrides.clear()
 
 
-#function did not pass. 
+ 
 def test_register(client: TestClient, session: Session):
     response = client.post(
         "/register", data={"username": "aston", 
@@ -153,7 +153,7 @@ def test_all_reviews(session: Session, client: TestClient):
     session.commit()
 
 
-    #review 
+    #reviews
     review1_data = {
         "author_id": user1.user_id,
         "location_id": location1.location_id, 
@@ -184,6 +184,146 @@ def test_all_reviews(session: Session, client: TestClient):
    
 
 #Review Pages
+def test_argo_review(client: TestClient, session : Session):
+    user_data = {"username": "test", "password": "testp"}
+    user = User(**user_data)
+
+    session.add(user)
+    session.commit()
+
+    location = Location(location_id=1, name="Argo Tea")
+    session.add(location)
+    session.commit()
+
+    review_data = {"author_id": user.user_id,
+                   "location_id": location.location_id,
+                   "rating": 5,
+                   "title": "Croissant",
+                   "body": "Fantastic food"}
+    
+    review = Review(**review_data)
+    session.add(review)
+    session.commit()
+
+    response = client.get("/reviewP/argoReview")
+    
+    assert response.status_code == 200
+    assert "Croissant" in response.text
+    assert "test" in response.text
+    assert "Fantastic food" in response.text
+
+def test_market_review(client: TestClient, session : Session):
+    user_data = {"username": "test", "password": "testp"}
+    user = User(**user_data)
+
+    session.add(user)
+    session.commit()
+
+    location = Location(location_id=2, name="Mills Marketplace")
+    session.add(location)
+    session.commit()
+
+    review_data = {"author_id": user.user_id,
+                   "location_id": location.location_id,
+                   "rating": 5,
+                   "title": "Croissant",
+                   "body": "Fantastic food"}
+    
+    review = Review(**review_data)
+    session.add(review)
+    session.commit()
+
+    response = client.get("/reviewP/marketReview")
+    
+    assert response.status_code == 200
+    assert "Croissant" in response.text
+    assert "test" in response.text
+    assert "Fantastic food" in response.text
+
+def test_mills_review(client: TestClient, session : Session):
+    user_data = {"username": "test", "password": "testp"}
+    user = User(**user_data)
+
+    session.add(user)
+    session.commit()
+
+    location = Location(location_id=3, name="Mills Dining Hall")
+    session.add(location)
+    session.commit()
+
+    review_data = {"author_id": user.user_id,
+                   "location_id": location.location_id,
+                   "rating": 5,
+                   "title": "Croissant",
+                   "body": "Fantastic food"}
+    
+    review = Review(**review_data)
+    session.add(review)
+    session.commit()
+
+    response = client.get("/reviewP/millsReview")
+    
+    assert response.status_code == 200
+    assert "Croissant" in response.text
+    assert "test" in response.text
+    assert "Fantastic food" in response.text
+
+
+def test_seasons_review(client: TestClient, session : Session):
+    user_data = {"username": "test", "password": "testp"}
+    user = User(**user_data)
+
+    session.add(user)
+    session.commit()
+
+    location = Location(location_id=4, name="Seasons")
+    session.add(location)
+    session.commit()
+
+    review_data = {"author_id": user.user_id,
+                   "location_id": location.location_id,
+                   "rating": 5,
+                   "title": "Croissant",
+                   "body": "Fantastic food"}
+    
+    review = Review(**review_data)
+    session.add(review)
+    session.commit()
+
+    response = client.get("/reviewP/seasonsReview")
+    
+    assert response.status_code == 200
+    assert "Croissant" in response.text
+    assert "test" in response.text
+    assert "Fantastic food" in response.text
+
+def test_wils_review(client: TestClient, session : Session):
+    user_data = {"username": "test", "password": "testp"}
+    user = User(**user_data)
+
+    session.add(user)
+    session.commit()
+
+    location = Location(location_id=5, name="Wilsbach Dining Hall")
+    session.add(location)
+    session.commit()
+
+    review_data = {"author_id": user.user_id,
+                   "location_id": location.location_id,
+                   "rating": 5,
+                   "title": "Croissant",
+                   "body": "Fantastic food"}
+    
+    review = Review(**review_data)
+    session.add(review)
+    session.commit()
+
+    response = client.get("/reviewP/wilsReview")
+    
+    assert response.status_code == 200
+    assert "Croissant" in response.text
+    assert "test" in response.text
+    assert "Fantastic food" in response.text
 
 
 
