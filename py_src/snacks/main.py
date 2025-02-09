@@ -3,4 +3,3 @@ from snacks.db import app
 
 
 app.include_router(router)
-
