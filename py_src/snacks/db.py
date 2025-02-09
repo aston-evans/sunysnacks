@@ -1,4 +1,3 @@
-
 import os #noqa 
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select 
 from contextlib import asynccontextmanager
@@ -24,21 +23,21 @@ templates = Jinja2Templates(directory="py_src/templates")
 
 
 
-
-class User(SQLModel, table=True):
+#to be used in future versions
+'''class User(SQLModel, table=True):
     __tablename__ = "users"
 
     user_id: int | None = Field(default=None, primary_key=True)
     username: str = Field(index=True, unique=True, nullable=False)
     password: str = Field(nullable=False)
     reviews: list["Review"] = Relationship(back_populates="author")
-
+'''
 
 class Review(SQLModel, table=True):
     __tablename__ = "reviews"
 
     review_id: int | None = Field(default=None, primary_key=True)
-    author_id: int = Field(nullable=False, foreign_key="users.user_id")
+    #author_id: int = Field(nullable=False, foreign_key="users.user_id")
     location_id: int = Field(nullable=False, foreign_key="locations.location_id")
     title: str = Field(nullable=False)
     body: str = Field(nullable=False)
@@ -47,8 +46,9 @@ class Review(SQLModel, table=True):
     # created: datetime = Field(nullable=False) Field(sa_column=Column(TIMESTAMP(timezone=True),
     # nullable=False, server_default=text("now()")))
     # link values
-    author: "User" = Relationship(back_populates="reviews")
+    #author: "User" = Relationship(back_populates="reviews") future for linking
     location: "Location" = Relationship(back_populates="reviews")
+    nickname: str = Field(nullable=False)
 
 
 class Location(SQLModel, table=True):
