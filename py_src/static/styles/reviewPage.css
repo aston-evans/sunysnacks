@@ -6,8 +6,9 @@ body {
   min-height: 100vh;
   margin: 0;
   position: relative;
-  font-family: Arial, sans-serif, Ageo; 
+  font-family: Arial, sans-serif, Ageo;
 }
+
 footer {
   position: absolute;
   bottom: 0;
@@ -66,4 +67,14 @@ footer {
 
 .bg-custom {
   background-color: #26619c;
+}
+
+.navbar-brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.navbar-brand:hover {
+  color: white !important;
 }

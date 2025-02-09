@@ -1,7 +1,8 @@
-
-html, body {
+html,
+body {
     height: 100%;
 }
+
 body {
     font-family: Arial, sans-serif, Ageo;
 }
@@ -13,8 +14,8 @@ body {
     max-width: 400px;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
-    background-color:#c41e3d;
-  }
+    background-color: #c41e3d;
+}
 
 footer {
     bottom: 0;
@@ -32,4 +33,14 @@ footer {
 
 .bg-custom {
     background-color: #26619c;
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.navbar-brand:hover {
+    color: white !important;
 }
