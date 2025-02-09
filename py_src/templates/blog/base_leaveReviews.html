@@ -16,7 +16,13 @@
   <!--header/navbar-->
   <nav class="navbar navbar-expand-lg navbar-custom ">
     <div class="container-fluid p-1">
-      <ul class="navbar-nav">
+      <a class="navbar-brand" href="/menu" text="white"> SunySnacks</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item custom">
           <a class="nav-link text-white custom fw-bold" href="/menu"> Home</a>
         </li>
@@ -62,13 +68,13 @@
             <li> <a class="dropdown-item" href="/reviewP/wilsReview"> Wilsbach Dining Hall</a></li>
         </li>
       </ul>
-      <li class="nav-item">
-        <a class="nav-link text-white fw-bold" href="../auth/login"> Log out</a>
-      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link text-white fw-bold" href="auth/login"> Log out</a>
+      </li>-->
       </ul>
     </div>
+    </div>
   </nav>
-
   <form class="my-5 pb-4 bg-custom" method="post" action="/reviewcreate">
     <h2 class="text-center text-white"><strong>Create your Review for {% block h2 %} { h2_name } {% endblock %}</strong>
     </h2>
@@ -96,6 +102,8 @@
         location_name }} {% endblock
         %}</strong></label>
     <textarea class="mb-3" name="content" id="body" placeholder="Begin..." required></textarea>
+    <label class="mt-3 d-block text-white fw-bold" for="author">Please enter a display nickname.</label>
+    <input class="mb-3" type="text" id="author" name="author" placeholder="Any nickname..." required>
 
     <button class="btn p-2 text-white" id="submit" type="submit">Submit Review!</button>
     <button class="btn p-2 text-white" id="cancel" onclick="location.href='/menu'">Cancel</button>
