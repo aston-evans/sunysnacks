@@ -15,9 +15,15 @@
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!--navbar header-->
-  <nav class="navbar navbar-expand-lg navbar-custom">
+  <nav class="navbar navbar-expand-lg navbar-custom ">
     <div class="container-fluid p-1">
-      <ul class="navbar-nav">
+      <a class="navbar-brand" href="/menu" text="white"> SunySnacks</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item custom">
           <a class="nav-link text-white custom fw-bold" href="/menu"> Home</a>
         </li>
@@ -53,7 +59,7 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-black fw-bold text-white" data-bs-toggle="dropdown" role="button"
+          <a class="nav-link dropdown-toggle text-white fw-bold" data-bs-toggle="dropdown" role="button"
             aria-expanded="false"> Current Reviews</a>
           <ul class="dropdown-menu bg-secondary">
             <li> <a class="dropdown-item" href="/reviewP/argoReview">Argo Tea</a></li>
@@ -63,9 +69,9 @@
             <li> <a class="dropdown-item" href="/reviewP/wilsReview"> Wilsbach Dining Hall</a></li>
         </li>
       </ul>
-      <li class="nav-item">
-        <a class="nav-link text-white fw-bold" href="../auth/login"> Log out</a>
-      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link text-white fw-bold" href="auth/login"> Log out</a>
+      </li>-->
       </ul>
     </div>
   </nav>
@@ -81,7 +87,7 @@
         </div>
       <div class="card-body">
         <p class="card-text text-white fst-italic fs-6"> {{ review.rating }}/5 stars</p>
-        <p class="card-text text-white mt-1"> {{review.body }} <i> by {{review.author}}</i></p>
+        <p class="card-text text-white mt-1"> {{review.body }} <i> by {{review.nickname}}</i></p>
         </div>
       </div>
       </div>
