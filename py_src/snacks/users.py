@@ -1,13 +1,14 @@
+"""to be used in the future.
 import os  # noqa
 import jwt  # noqa
 from fastapi import Depends, HTTPException, status, Form #noqa
-from datetime import datetime, timedelta, timezone  
-from pydantic import BaseModel 
+from datetime import datetime, timedelta, timezone
+from pydantic import BaseModel
 from sqlmodel import Session,select
-from passlib.context import CryptContext  
+from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
-from snacks.db import get_session, User, Review #noqa 
+from snacks.db import get_session, User, Review #noqa
 from fastapi.responses import RedirectResponse #noqa
 
 
@@ -90,3 +91,4 @@ def current_user(
         raise credentials_exception
     return user
 
+"""
