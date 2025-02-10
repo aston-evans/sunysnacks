@@ -1,4 +1,5 @@
 # adding user info in the future
+import random
 from fastapi import Request, Depends, APIRouter
 from fastapi.responses import HTMLResponse
 from snacks.db import Review, Location, get_session, templates  # noqa
@@ -14,9 +15,29 @@ router = APIRouter()
 
 # routes! Change each app. to routes
 @router.get("/", response_class=HTMLResponse)
+async def root(request: Request, db: Session = Depends(get_session)):
+    # Query to fetch reviews and associated location information
+    reviews = db.exec(select(Review, Location).join(Location, Review.location_id == Location.location_id)).all()
+
+    allreviews = []
+    for review, location in reviews:
+        allreviews.append(
+            {
+                "title": review.title,
+                "body": review.body,
+                "rating": review.rating,
+                "location": location.name,
+                "nickname": review.nickname,
+            }
+        )
+    random.shuffle(allreviews)
+
+    # Pass the transformed `allreviews` list to the template
+    return templates.TemplateResponse("menu.html", {"request": request, "reviews": allreviews})
+'''@router.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("menu.html", {"request": request})
-
+'''
 
 """@router.get("/auth/login", response_class=HTMLResponse)
 async def login(request: Request):
@@ -72,6 +93,7 @@ async def menu(request: Request, db: Session = Depends(get_session)):
                 "nickname": review.nickname,
             }
         )
+    random.shuffle(allreviews)
 
     # Pass the transformed `allreviews` list to the template
     return templates.TemplateResponse("menu.html", {"request": request, "reviews": allreviews})
@@ -183,7 +205,7 @@ async def wils_review(request: Request, db: Session = Depends(get_session)):
                 "body": review.body,
                 "rating": review.rating,
                 # "author": user.username,
-                "author": review.nickname,
+                "nickname": review.nickname,
             }
         )
     return templates.TemplateResponse("reviewP/wilsReviewPage.html", {"request": request, "reviews": newreview})
