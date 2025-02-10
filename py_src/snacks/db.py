@@ -1,23 +1,23 @@
-import os  # noqa
+import os #noqa
 from sqlmodel import SQLModel, Field, create_engine, Session, Relationship, select
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
+app = FastAPI()
+
+@app.on_event("startup")
+def startup():
     create_db_and_tables()
-    # inserts the locations only once.
+    # Insert default locations if they don’t exist
     with Session(engine) as session:
         location_exists = session.exec(select(Location)).first()
         if not location_exists:
             create_locations()
-    yield
 
 
-app = FastAPI(lifespan=lifespan)
+
 
 
 app.mount("/static", StaticFiles(directory="py_src/static"), name="static")
