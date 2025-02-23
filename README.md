@@ -30,7 +30,7 @@ A simple remove website made with Fastapi and Bootstrap. It allows users to revi
 ## 🛠 Installation
 1️⃣ Clone the repo 
 ```sh
-git clone https://github.com/aston-evans/portfolio.git
+git clone https://github.com/aston-evans/sunysnacks.git
 ```
 2️⃣ Navigate into the project directory
 ```sh
@@ -38,7 +38,7 @@ cd sunysnacks
 ```
 3️⃣ Install dependencies with `uv`
 ```sh
-uv install .
+uv sync
 ```
 4️⃣ Run the FastAPI server
 ```sh
