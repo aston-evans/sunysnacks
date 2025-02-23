@@ -1,6 +1,13 @@
 # sunysnacks
 A simple remove website made with Fastapi and Bootstrap. It allows users to review meals and view other reviews of food locations on the SUNY Oneonta campus.
 
+## Table of Contents
+  * [Tech Stack](#Tech-Stack)
+  * [Features](#Features)
+  * [Installation](#Installation)
+  * [Deployment](#Deployment)
+
+
 ## Tech Stack
 <h4>Frontend: HTML, CSS, Bootstrap</h4>
 <h4>Backend: Python, Fastapi, SQLite</h4>
@@ -11,7 +18,7 @@ A simple remove website made with Fastapi and Bootstrap. It allows users to revi
 -✅ Mobile-friendly UI  
 -✅ Review and rate snacks 
 
-## 🛠 Installation & Setup
+## 🛠 Installation
 1️⃣ Clone the repo 
 ```sh
 git clone https://github.com/aston-evans/portfolio.git
