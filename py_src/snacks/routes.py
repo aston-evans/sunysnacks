@@ -4,7 +4,7 @@ from fastapi import Request, Depends, APIRouter
 from fastapi.responses import HTMLResponse
 from snacks.db import Review, Location, get_session, templates  # noqa
 from sqlmodel import Session, select
-
+from snacks.auth import decode_token, oauth2_bearer
 from fastapi.responses import RedirectResponse
 from fastapi import Depends, HTTPException, status, Form  # noqa
 # from snacks.users import pwd_context
@@ -34,12 +34,9 @@ async def root(request: Request, db: Session = Depends(get_session)):
 
     # Pass the transformed `allreviews` list to the template
     return templates.TemplateResponse("menu.html", {"request": request, "reviews": allreviews})
-'''@router.get("/", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("menu.html", {"request": request})
-'''
 
-"""@router.get("/auth/login", response_class=HTMLResponse)
+
+@router.get("/auth/login", response_class=HTMLResponse)
 async def login(request: Request):
     return templates.TemplateResponse("auth/login.html", {"request": request})
 
@@ -48,7 +45,7 @@ async def login(request: Request):
 @router.get("/create", response_class=HTMLResponse)
 async def create_account(request: Request, q: None = None):
     return templates.TemplateResponse("auth/create.html", {"request": request, "q": q})
-"""
+
 
 
 # createR is the route for the leave review pages
@@ -78,10 +75,18 @@ async def wils_leave_review(request: Request):
 
 
 @router.get("/menu", response_class=HTMLResponse)
-async def menu(request: Request, db: Session = Depends(get_session)):
-    # Query to fetch reviews and associated location information
+async def menu(request: Request, db: Session = Depends(get_session), token: str = Depends(oauth2_bearer)):
+    print(f"Received token: {token}")  # Debug print to check token flow
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    payload = decode_token(token)
+    if not payload:
+        print("Token decoding failed")  # Debug print
+        return RedirectResponse(url="/auth/login")
+    
+    # If token is valid, fetch reviews
     reviews = db.exec(select(Review, Location).join(Location, Review.location_id == Location.location_id)).all()
-
     allreviews = []
     for review, location in reviews:
         allreviews.append(
@@ -95,8 +100,9 @@ async def menu(request: Request, db: Session = Depends(get_session)):
         )
     random.shuffle(allreviews)
 
-    # Pass the transformed `allreviews` list to the template
     return templates.TemplateResponse("menu.html", {"request": request, "reviews": allreviews})
+
+
 
 
 @router.get("/reviewP/argoReview", response_class=HTMLResponse)
