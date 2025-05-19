@@ -1,16 +1,28 @@
 import pytest
-from fastapi.testclient import TestClient
-from sqlmodel import Session, create_engine, SQLModel, select
 from fastapi import Depends  # noqa
+from fastapi.testclient import TestClient
+from snacks.db import Location, Review, get_session
 from snacks.main import app
+from sqlmodel import Session, SQLModel, create_engine, select
 from sqlmodel.pool import StaticPool
-from snacks.db import Review, Location, get_session
 
 client = TestClient(app)
 
+# Location ID constants for tests
+LOCATION_NAMES = {
+    "argo": "Argo Tea",
+    "marketplace": "Mills Marketplace",
+    "mills": "Mills Dining Hall",
+    "seasons": "Seasons",
+    "wilsbach": "Wilsbach Dining Hall",
+}
+
+
 @pytest.fixture(name="session")
 def session_fixture():
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    engine = create_engine(
+        "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
+    )
     SQLModel.metadata.create_all(engine)
     with Session(engine) as session:
         yield session
@@ -28,50 +40,25 @@ def client_fixture(session: Session):
     app.dependency_overrides.clear()
 
 
-"""def test_register(client: TestClient, session: Session):
-    response = client.post(
-        "/register", data={"username": "aston", 
-                           "password": "test"},
-                           follow_redirects=False,
-    )
-    assert response.status_code == 303
-    assert response.headers["location"] == "auth/login"
-
-    user = session.exec(select(User).where(User.username == "aston")).first()
-    assert user is not None 
-    """
-
-# login pages
-def test_root(session: Session, client: TestClient):
-    """user1_data = {"username": "test", "password": "test password"}
-    user1 = User(**user1_data)
-
-    user2_data = {"username": "aston", "password": "test"}
-    user2 = User(**user2_data)
-
-    session.add(user1)
-    session.add(user2)
-    session.commit()
-    """
-    # locations
-    location1 = Location(name="test lo")
-    location2 = Location(name="dining hall")
-    session.add(location1)
-    session.add(location2)
+@pytest.fixture(name="setup_locations")
+def setup_locations_fixture(session: Session):
+    for location_id, name in LOCATION_NAMES.items():
+        location = Location(location_id=location_id, name=name)
+        session.add(location)
     session.commit()
 
-    # reviews
+
+def test_root(session: Session, client: TestClient, setup_locations):
+    # Use existing locations
     review1_data = {
-        # "author_id": user1.user_id,
-        "location_id": location1.location_id,
+        "location_id": "argo",
         "rating": 3,
         "title": "Food",
         "body": "Great food",
         "nickname": "test",
     }
     review2_data = {
-        # "author_id": user2.user_id,
-        "location_id": location2.location_id,
+        "location_id": "mills",
         "rating": 2,
         "title": "chicken",
         "body": "test body",
@@ -86,122 +73,72 @@ def test_root(session: Session, client: TestClient):
     response = client.get("/menu")
     assert response.status_code == 200
 
+    # Check for review content in the response
     assert "Food" in response.text
     assert "chicken" in response.text
-    assert "test" in response.text
-    assert "test2" in response.text
-    # assert "test" in response.text
-    # assert "aston" in response.text
+    assert "Great food" in response.text
+    assert "test body" in response.text
+
+    # Get the location name from the session
+    mills_location = session.exec(
+        select(Location).where(Location.location_id == "mills")
+    ).first()
+    assert mills_location.name in response.text
 
 
-
-"""def test_login():
-    response = client.get("/auth/login")
-    assert response.status_code == 200
-"""
-# create an account page
-"""def test_create_account():
-    response = client.get("/create")
-    assert response.status_code == 200
-"""
-
-
-# create review pages
-def test_argo_leave_review():
-    response = client.get("/createR/argoLeaveReview")
+# Test leave review pages
+@pytest.mark.parametrize("location", LOCATION_NAMES.keys())
+def test_leave_review_pages(client: TestClient, setup_locations, location: str):
+    response = client.get(f"/create-review/{location}")
     assert response.status_code == 200
 
 
-def test_market_leave_review():
-    response = client.get("/createR/marketLeaveReview")
-    assert response.status_code == 200
-
-
-def test_mills_leave_review():
-    response = client.get("/createR/millsLeaveReview")
-    assert response.status_code == 200
-
-
-def test_seasons_leave_review():
-    response = client.get("/createR/seasonsLeaveReview")
-    assert response.status_code == 200
-
-
-def test_wils_leave_review():
-    response = client.get("createR/wilsLeaveReview")
-    assert response.status_code == 200
-
-
-# create user
-
-
-# create review
-
-
-def test_create_review(client: TestClient, session: Session):
-    # Create user
-
-    location = Location(name="Dining Hall")
-    session.add(location)
-    session.commit()
-    session.refresh(location)
-    location_id = location.location_id
-
-    # Prepare review data
-    review_data = {"meal": "lunch", "stars": 3, "content": "body", "location_id": location_id, "author": "test"}
+def test_create_review(client: TestClient, session: Session, setup_locations):
+    review_data = {
+        "title": "lunch",
+        "rating": 3,
+        "body": "body",
+        "location_id": "argo",  # Use route location id
+        "nickname": "test",
+    }
 
     response = client.post("/reviewcreate", data=review_data, follow_redirects=False)
 
     assert response.status_code == 303
-    assert response.headers["location"] == "/menu"
+    assert response.headers["location"] == "/reviews/argo"
+
+    # Get location from database
+    location = session.exec(select(Location).where(Location.name == "Argo Tea")).first()
+    assert location is not None
 
     # Check if review was created
-    # review = session.exec(select(Review).where(Review.author_id == user_id)).first()
-
-    review = session.exec(select(Review).where(Review.location_id == location_id)).first()
-    # Validate review details
-    assert review is not None  # and review.review_id is not None
+    review = session.exec(
+        select(Review).where(Review.location_id == location.location_id)
+    ).first()
+    assert review is not None
     assert review.title == "lunch"
     assert review.rating == 3
     assert review.body == "body"
-    assert review.location_id == location_id
+    assert review.location_id == location.location_id
     assert review.nickname == "test"
 
 
-# Home menu page
+def test_all_reviews(session: Session, client: TestClient, setup_locations):
+    # Use existing locations instead of creating new ones
+    seasons = session.exec(select(Location).where(Location.name == "Seasons")).first()
+    marketplace = session.exec(
+        select(Location).where(Location.name == "Mills Marketplace")
+    ).first()
 
-
-def test_all_reviews(session: Session, client: TestClient):
-    # users
-    """user1_data = {"username": "test", "password": "test password"}
-    user1 = User(**user1_data)
-
-    user2_data = {"username": "aston", "password": "test"}
-    user2 = User(**user2_data)
-
-    session.add(user1)
-    session.add(user2)
-    session.commit()
-    """
-    # locations
-    location1 = Location(name="test lo")
-    location2 = Location(name="dining hall")
-    session.add(location1)
-    session.add(location2)
-    session.commit()
-
-    # reviews
     review1_data = {
-        # "author_id": user1.user_id,
-        "location_id": location1.location_id,
+        "location_id": seasons.location_id,
         "rating": 3,
         "title": "Food",
         "body": "Great food",
         "nickname": "test",
     }
     review2_data = {
-        # "author_id": user2.user_id,
-        "location_id": location2.location_id,
+        "location_id": marketplace.location_id,
         "rating": 2,
         "title": "chicken",
         "body": "test body",
@@ -216,28 +153,29 @@ def test_all_reviews(session: Session, client: TestClient):
     response = client.get("/menu")
     assert response.status_code == 200
 
+    # Check for review content in the response
     assert "Food" in response.text
     assert "chicken" in response.text
-    assert "test" in response.text
-    assert "test2" in response.text
-    # assert "test" in response.text
-    # assert "aston" in response.text
+    assert "Great food" in response.text
+    assert "test body" in response.text
+    assert marketplace.name in response.text
+    assert seasons.name in response.text
 
 
-# Review Pages
-def test_argo_review(client: TestClient, session: Session):
-    """user_data = {"username": "test", "password": "testp"}
-    user = User(**user_data)
+# Test review pages
+@pytest.mark.parametrize("location", LOCATION_NAMES.keys())
+def test_location_reviews(
+    client: TestClient, session: Session, setup_locations, location: str
+):
+    # Get the location from database
+    location_name = LOCATION_NAMES[location]
+    db_location = session.exec(
+        select(Location).where(Location.name == location_name)
+    ).first()
+    assert db_location is not None
 
-    session.add(user)
-    session.commit()"""
-
-    location = Location(location_id=1, name="Argo Tea")
-    session.add(location)
-    session.commit()
-
-    review_data = {  # "author_id": user.user_id,
-        "location_id": location.location_id,
+    review_data = {
+        "location_id": db_location.location_id,
         "rating": 5,
         "title": "Croissant",
         "body": "Fantastic food",
@@ -248,7 +186,7 @@ def test_argo_review(client: TestClient, session: Session):
     session.add(review)
     session.commit()
 
-    response = client.get("/reviewP/argoReview")
+    response = client.get(f"/reviews/{location}")
 
     assert response.status_code == 200
     assert "Croissant" in response.text
@@ -256,125 +194,216 @@ def test_argo_review(client: TestClient, session: Session):
     assert "Fantastic food" in response.text
 
 
-def test_market_review(client: TestClient, session: Session):
-    """user_data = {"username": "test", "password": "testp"}
-    user = User(**user_data)
+def test_campus_map(client: TestClient, setup_locations):
+    response = client.get("/campus-map")
+    assert response.status_code == 200
+    # Verify all locations are present in the response
+    for name in LOCATION_NAMES.values():
+        assert name in response.text
 
-    session.add(user)
-    session.commit()"""
 
-    location = Location(location_id=2, name="Mills Marketplace")
-    session.add(location)
-    session.commit()
+@pytest.mark.parametrize("location_id", ["invalid", "nonexistent"])
+def test_invalid_location_reviews(
+    client: TestClient, setup_locations, location_id: str
+):
+    response = client.get(f"/reviews/{location_id}")
+    assert response.status_code == 404
 
-    review_data = {  # "author_id": user.user_id,
-        "location_id": location.location_id,
-        "rating": 5,
-        "title": "Croissant",
-        "body": "Fantastic food",
+
+@pytest.mark.parametrize("location_id", ["invalid", "nonexistent"])
+def test_invalid_create_review(client: TestClient, setup_locations, location_id: str):
+    review_data = {
+        "title": "lunch",
+        "rating": 3,
+        "body": "body",
+        "location_id": location_id,
         "nickname": "test",
     }
 
-    review = Review(**review_data)
-    session.add(review)
-    session.commit()
-
-    response = client.get("/reviewP/marketReview")
-
-    assert response.status_code == 200
-    assert "Croissant" in response.text
-    assert "test" in response.text
-    assert "Fantastic food" in response.text
+    response = client.post("/reviewcreate", data=review_data, follow_redirects=False)
+    assert response.status_code == 404
 
 
-def test_mills_review(client: TestClient, session: Session):
-    """user_data = {"username": "test", "password": "testp"}
-    user = User(**user_data)
-
-    session.add(user)
-    session.commit()"""
-
-    location = Location(location_id=3, name="Mills Dining Hall")
-    session.add(location)
-    session.commit()
-
-    review_data = {  # "author_id": user.user_id,
-        "location_id": location.location_id,
-        "rating": 5,
-        "title": "Croissant",
-        "body": "Fantastic food",
+def test_invalid_rating(client: TestClient, setup_locations):
+    review_data = {
+        "title": "lunch",
+        "rating": 6,  # Invalid rating > 5
+        "body": "body",
+        "location_id": "argo",
         "nickname": "test",
     }
 
-    review = Review(**review_data)
-    session.add(review)
-    session.commit()
+    response = client.post("/reviewcreate", data=review_data, follow_redirects=False)
+    assert response.status_code == 422  # Validation error
 
-    response = client.get("/reviewP/millsReview")
 
+def test_root_path(client: TestClient, setup_locations):
+    response = client.get("/")
     assert response.status_code == 200
-    assert "Croissant" in response.text
-    assert "test" in response.text
-    assert "Fantastic food" in response.text
+    assert "SunySnacks" in response.text
 
 
-def test_seasons_review(client: TestClient, session: Session):
-    """user_data = {"username": "test", "password": "testp"}
-    user = User(**user_data)
+def test_create_review_missing_fields(client: TestClient, setup_locations):
+    # Test missing fields
+    response = client.post(
+        "/reviewcreate",
+        data={
+            "title": "lunch",
+            # missing rating
+            "body": "body",
+            "location_id": "argo",
+            "nickname": "test",
+        },
+    )
+    assert response.status_code == 422  # Validation error
 
-    session.add(user)
+    # Test invalid rating type
+    response = client.post(
+        "/reviewcreate",
+        data={
+            "title": "lunch",
+            "rating": "not a number",  # invalid rating
+            "body": "body",
+            "location_id": "argo",
+            "nickname": "test",
+        },
+    )
+    assert response.status_code == 422  # Validation error
+
+
+@pytest.mark.parametrize("path", ["/reviews/", "/create-review/"])
+def test_missing_location_id(client: TestClient, setup_locations, path: str):
+    response = client.get(path)
+    assert response.status_code == 404  # Not found error
+
+
+def test_reviews_missing_location_in_db(
+    client: TestClient, session: Session, setup_locations
+):
+    # Delete the location from database but keep it in locations.json
+    location = session.exec(select(Location).where(Location.name == "Argo Tea")).first()
+    session.delete(location)
     session.commit()
-    """
-    location = Location(location_id=4, name="Seasons")
-    session.add(location)
-    session.commit()
 
-    review_data = {  # "author_id": user.user_id,
-        "location_id": location.location_id,
-        "rating": 5,
-        "title": "Croissant",
-        "body": "Fantastic food",
+    # Try to create a review - should fail because location isn't in DB
+    review_data = {
+        "title": "lunch",
+        "rating": 3,
+        "body": "body",
+        "location_id": "argo",
         "nickname": "test",
     }
+    response = client.post("/reviewcreate", data=review_data)
+    assert response.status_code == 404
+    assert "Location not found in database" in response.text
 
-    review = Review(**review_data)
-    session.add(review)
-    session.commit()
+    # Try to view reviews - should fail for same reason
+    response = client.get("/reviews/argo")
+    assert response.status_code == 404
+    assert "Location not found in database" in response.text
 
-    response = client.get("/reviewP/seasonsReview")
 
+def test_empty_reviews(client: TestClient, setup_locations):
+    response = client.get("/")
     assert response.status_code == 200
-    assert "Croissant" in response.text
-    assert "test" in response.text
-    assert "Fantastic food" in response.text
+    assert "reviews" in response.text  # Page renders even with no reviews
 
 
-def test_wils_review(client: TestClient, session: Session):
-    """user_data = {"username": "test", "password": "testp"}
-    user = User(**user_data)
+def test_routes_init_locations(session: Session):
+    import json
+    import os
+    import tempfile
+    from pathlib import Path
 
-    session.add(user)
-    session.commit()
-    """
-    location = Location(location_id=5, name="Wilsbach Dining Hall")
-    session.add(location)
-    session.commit()
+    from snacks.routes import init_locations
 
-    review_data = {  # "author_id": user.user_id, using this in the future
-        "location_id": location.location_id,
-        "rating": 5,
-        "title": "Croissant",
-        "body": "Fantastic food",
-        "nickname": "test",
+    # Create a temporary locations.json
+    test_locations = {
+        "test": {
+            "id": "test",
+            "name": "Test Location",
+            "description": "Test Description",
+            "coordinates": {"lat": 0, "lng": 0},
+            "hours": {
+                "weekdays": "9-5",
+                "friday": "9-5",
+                "saturday": "Closed",
+                "sunday": "Closed",
+            },
+            "links": {},
+            "map": "",
+            "image": "test.jpg",
+        }
     }
 
-    review = Review(**review_data)
-    session.add(review)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create the directory structure
+        os.makedirs(os.path.join(tmpdir, "static", "resources"))
+        json_path = os.path.join(tmpdir, "static", "resources", "locations.json")
+
+        # Write test data
+        with open(json_path, "w") as f:
+            json.dump(test_locations, f)
+
+        # Monkey patch the Path handling temporarily
+        original_path = Path
+        try:
+
+            def mock_path(*args):
+                if len(args) > 1 and args[-1] == "locations.json":
+                    return Path(json_path)
+                return original_path(*args)
+
+            import snacks.routes
+
+            snacks.routes.Path = mock_path
+
+            # Initialize locations
+            init_locations(session)
+
+            # Verify the location was created
+            location = session.exec(
+                select(Location).where(Location.name == "Test Location")
+            ).first()
+            assert location is not None
+
+        finally:
+            # Restore original Path
+            snacks.routes.Path = original_path
+
+
+def test_create_review_invalid_location(client: TestClient):
+    # Test non-existent location
+    response = client.get("/create-review/nonexistent")
+    assert response.status_code == 404
+    assert "Location not found" in response.json()["detail"]
+
+
+def test_root_no_reviews(session: Session, client: TestClient, setup_locations):
+    # Test with locations but no reviews
+    response = client.get("/menu")
+    assert response.status_code == 200
+    # Make sure no review content is shown but locations are listed
+    for name in LOCATION_NAMES.values():
+        assert name in response.text
+    assert "No reviews yet" in response.text
+
+
+def test_init_locations(session: Session, client: TestClient):
+    from snacks.routes import init_locations
+
+    # Clear any existing locations
+    session.query(Location).delete()
     session.commit()
 
-    response = client.get("/reviewP/wilsReview")
+    # Run the initialization
+    init_locations(session)
 
-    assert response.status_code == 200
-    assert "Croissant" in response.text
-    assert "test" in response.text
-    assert "Fantastic food" in response.text
+    # Verify all locations were created
+    locations = session.exec(select(Location)).all()
+    assert len(locations) == len(LOCATION_NAMES)
+
+    # Verify each location has correct data
+    for location in locations:
+        assert location.location_id in LOCATION_NAMES
+        assert location.name == LOCATION_NAMES[location.location_id]

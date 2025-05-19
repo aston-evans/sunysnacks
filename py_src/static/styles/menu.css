@@ -1,46 +1,239 @@
 html,
 body {
     height: 100%;
+    margin: 0;
 }
 
 body {
-    font-family: Arial, sans-serif, Ageo;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #e2e8f0;
 }
 
+/* Modern card styling */
 .review {
-    border: 2px solid black;
-    border-radius: 10px;
-    /*margin-bottom: 20px;*/
+    border: none;
+    border-radius: 16px;
     max-width: 400px;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 1rem;
+    overflow: hidden;
+    border-left: 4px solid #c41e3d;
+    border-right: 4px solid #c41e3d;
+}
+
+.review:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Review content styling */
+.review-content {
+    padding: 1.5rem;
+    background: linear-gradient(to right, rgba(196, 30, 61, 0.03), transparent);
+}
+
+.review-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a2b3c;
+    margin-bottom: 0.5rem;
+}
+
+.review-body {
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.review-rating {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #f8fafc;
+    border-radius: 9999px;
+    font-weight: 500;
+    color: #1a2b3c;
+    margin-top: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Info Header styling */
+.info-header {
     background-color: #c41e3d;
+    background-image: linear-gradient(135deg, #c41e3d 0%, #a01830 100%);
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
+.main-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.025em;
+    text-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+}
+
+.main-description {
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    text-align: justify;
+    margin: 0 auto;
+    max-width: 900px;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
+    padding: 0 1rem;
+}
+
+/* Container improvements */
+.container {
+    padding: 2rem 1rem;
+    background-color: white;
+    border-radius: 24px;
+    margin-top: -2rem;
+    position: relative;
+    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Fix container background for info header */
+.info-header .container {
+    background-color: transparent;
+    box-shadow: none;
+    margin-top: 0;
+}
+
+/* Reviews section title */
+.reviews-title {
+    color: #1a2b3c;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Footer styling */
 footer {
-    bottom: 0;
+    background-color: #1a2b3c;
+    color: white;
+    padding: 0.75rem 0;
+    margin-top: auto;
+    font-size: 1.1rem;
 }
 
+footer .container {
+    background-color: transparent;
+    box-shadow: none;
+    margin-top: 0;
+    color: white;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+footer a {
+    position: relative;
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+}
+
+footer a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+footer a:hover:after {
+    width: 100%;
+}
+
+footer a:hover {
+    opacity: 0.9;
+}
+
+footer .material-icons {
+    transition: transform 0.3s ease;
+}
+
+footer a:hover .material-icons {
+    transform: translateX(4px);
+}
+
+/* Reviews section title */
+.reviews-title {
+    color: #1a2b3c;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Modern navbar */
 .navbar-custom {
     background-color: #c41e3d;
-    /*E30022  D52941*/
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
 .carousel-item img {
     height: 500px;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 0 0 24px 24px;
 }
 
 .bg-custom {
     background-color: #26619c;
+    background-image: linear-gradient(135deg, #26619c 0%, #1a4b7c 100%);
+    border-radius: 16px;
 }
 
+/* Modern navbar brand */
 .navbar-brand {
     color: white;
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.025em;
+    transition: opacity 0.2s ease;
 }
 
 .navbar-brand:hover {
     color: white !important;
+    opacity: 0.9;
+}
+
+/* Dropdown improvements */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.dropdown-item {
+    transition: background-color 0.2s ease;
+    padding: 0.75rem 1.25rem;
 }

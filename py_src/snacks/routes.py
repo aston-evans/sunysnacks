@@ -1,263 +1,303 @@
 # adding user info in the future
-import random
-from fastapi import Request, Depends, APIRouter
-from fastapi.responses import HTMLResponse
-from snacks.db import Review, Location, get_session, templates  # noqa
+import urllib.parse
+
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
 
-from fastapi.responses import RedirectResponse
-from fastapi import Depends, HTTPException, status, Form  # noqa
-# from snacks.users import pwd_context
-
+from snacks.db import (
+    LocationHours,
+    LocationLinks,
+    Locations,
+    Reviews,
+    get_session,
+    templates,
+)
 
 router = APIRouter()
 
 
-# routes! Change each app. to routes
+def generate_map_url(lat: float, lng: float, name: str = "") -> str:
+    """Generate a Google Maps embed URL from coordinates"""
+    encoded_name = urllib.parse.quote(name)
+    return (
+        f"https://www.google.com/maps/embed"
+        f"?pb=!1m18!1m12!1m3!1d734!2d{lng}!3d{lat}"
+        f"!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1"
+        f"!3m3!1m2!1s!2s{encoded_name}!5e0!3m2!1sen!2sus!4v1!5m2!1sen!2sus"
+    )
+
+
+def get_locations(db: Session):
+    """Helper function to get all locations with their data"""
+    locations = db.exec(select(Locations)).all()
+    location_data = []
+
+    for location in locations:
+        location_data.append({"id": location.location_id, "name": location.name})
+
+    return location_data
+
+
 @router.get("/", response_class=HTMLResponse)
 async def root(request: Request, db: Session = Depends(get_session)):
     # Query to fetch reviews and associated location information
-    reviews = db.exec(select(Review, Location).join(Location, Review.location_id == Location.location_id)).all()
+    
+    review_locations = db.exec(
+        select(Reviews, Locations).join(
+            Locations, Reviews.location_id == Locations.location_id
+        )
+    ).all()
 
     allreviews = []
-    for review, location in reviews:
+    for review, location in review_locations:
+        # Get location hours
+        hours = db.exec(
+            select(LocationHours).where(
+                LocationHours.location_id == location.location_id
+            )
+        ).all()
+
+        # Get location links
+        links = db.exec(
+            select(LocationLinks).where(
+                LocationLinks.location_id == location.location_id
+            )
+        ).all()
+
         allreviews.append(
             {
                 "title": review.title,
                 "body": review.body,
                 "rating": review.rating,
-                "location": location.name,
+                "location": {
+                    "id": location.location_id,
+                    "name": location.name,
+                    "description": location.description,
+                    "coordinates": {
+                        "lat": location.latitude,
+                        "lng": location.longitude,
+                    },
+                    "hours": {h.day_type: h.hours for h in hours},
+                    "links": {l.link_type: l.url for l in links},
+                    "image": location.image_filename,
+                    "map": generate_map_url(
+                        location.latitude, location.longitude, location.name
+                    ),
+                },
                 "nickname": review.nickname,
             }
         )
-    random.shuffle(allreviews)
 
-    # Pass the transformed `allreviews` list to the template
-    return templates.TemplateResponse("menu.html", {"request": request, "reviews": allreviews})
-'''@router.get("/", response_class=HTMLResponse)
-async def root(request: Request):
-    return templates.TemplateResponse("menu.html", {"request": request})
-'''
-
-"""@router.get("/auth/login", response_class=HTMLResponse)
-async def login(request: Request):
-    return templates.TemplateResponse("auth/login.html", {"request": request})
-
-
-
-@router.get("/create", response_class=HTMLResponse)
-async def create_account(request: Request, q: None = None):
-    return templates.TemplateResponse("auth/create.html", {"request": request, "q": q})
-"""
-
-
-# createR is the route for the leave review pages
-@router.get("/createR/argoLeaveReview", response_class=HTMLResponse)
-async def argo_leave_review(request: Request):
-    return templates.TemplateResponse("createR/argoLeaveReview.html", {"request": request})
-
-
-@router.get("/createR/marketLeaveReview", response_class=HTMLResponse)
-async def market_leave_review(request: Request):
-    return templates.TemplateResponse("createR/marketLeaveReview.html", {"request": request})
-
-
-@router.get("/createR/millsLeaveReview", response_class=HTMLResponse)
-async def mills_leave_review(request: Request):
-    return templates.TemplateResponse("createR/millsLeaveReview.html", {"request": request})
-
-
-@router.get("/createR/seasonsLeaveReview", response_class=HTMLResponse)
-async def seasons_leave_review(request: Request):
-    return templates.TemplateResponse("createR/seasonsLeaveReview.html", {"request": request})
-
-
-@router.get("/createR/wilsLeaveReview", response_class=HTMLResponse)
-async def wils_leave_review(request: Request):
-    return templates.TemplateResponse("createR/wilsLeaveReview.html", {"request": request})
+    locations = get_locations(db)
+    return templates.TemplateResponse(
+        "menu.html", {"request": request, "reviews": allreviews, "locations": locations}
+    )
 
 
 @router.get("/menu", response_class=HTMLResponse)
 async def menu(request: Request, db: Session = Depends(get_session)):
-    # Query to fetch reviews and associated location information
-    reviews = db.exec(select(Review, Location).join(Location, Review.location_id == Location.location_id)).all()
+    return await root(request, db)
 
-    allreviews = []
-    for review, location in reviews:
-        allreviews.append(
+
+@router.get("/campus-map", response_class=HTMLResponse)
+async def campus_map(request: Request, db: Session = Depends(get_session)):
+    # Get all locations with their hours and links
+    locations = db.exec(select(Locations)).all()
+    location_data = []
+
+    for location in locations:
+        # Get location hours
+        hours = db.exec(
+            select(LocationHours).where(
+                LocationHours.location_id == location.location_id
+            )
+        ).all()
+
+        # Get location links
+        links = db.exec(
+            select(LocationLinks).where(
+                LocationLinks.location_id == location.location_id
+            )
+        ).all()
+
+        location_data.append(
             {
-                "title": review.title,
-                "body": review.body,
-                "rating": review.rating,
-                "location": location.name,
-                "nickname": review.nickname,
+                "id": location.location_id,
+                "name": location.name,
+                "description": location.description,
+                "coordinates": {"lat": location.latitude, "lng": location.longitude},
+                "hours": {h.day_type: h.hours for h in hours},
+                "links": {l.link_type: l.url for l in links},
+                "image": location.image_filename,
             }
         )
-    random.shuffle(allreviews)
 
-    # Pass the transformed `allreviews` list to the template
-    return templates.TemplateResponse("menu.html", {"request": request, "reviews": allreviews})
-
-
-@router.get("/reviewP/argoReview", response_class=HTMLResponse)
-async def argo_review(request: Request, db: Session = Depends(get_session)):
-    reviews = db.exec(
-        select(Review)  # select(Review, User)
-        # .join(User, Review.author_id == User.user_id)
-        .where(Review.location_id == 1)
-    ).all()
-
-    newreview = []
-    for review in reviews:  # for review, user in reviews
-        newreview.append(
-            {
-                "title": review.title,
-                "body": review.body,
-                "rating": review.rating,
-                # "author": user.username,
-                "nickname": review.nickname,
-            }
-        )
-    return templates.TemplateResponse("reviewP/argoReviewPage.html", {"request": request, "reviews": newreview})
-
-
-@router.get("/reviewP/marketReview", response_class=HTMLResponse)
-async def market_review(request: Request, db: Session = Depends(get_session)):
-    reviews = db.exec(
-        select(
-            Review,
-        )  # select(Review, User)
-        # .join(User, Review.author_id == User.user_id)
-        .where(Review.location_id == 2)
-    ).all()
-
-    newreview = []
-    for review in reviews:  # for review, user in reviews
-        newreview.append(
-            {
-                "title": review.title,
-                "body": review.body,
-                "rating": review.rating,
-                # "author": user.username,
-                "nickname": review.nickname,
-            }
-        )
-    return templates.TemplateResponse("reviewP/marketReviewPage.html", {"request": request, "reviews": newreview})
-
-
-@router.get("/reviewP/millsReview", response_class=HTMLResponse)
-async def mills_review(request: Request, db: Session = Depends(get_session)):
-    reviews = db.exec(
-        select(Review)  # select(Review, User)
-        # .join(User, Review.author_id == User.user_id)
-        .where(Review.location_id == 3)
-    ).all()
-
-    newreview = []
-    for review in reviews:  # for review, user in reviews
-        newreview.append(
-            {
-                "title": review.title,
-                "body": review.body,
-                "rating": review.rating,
-                # "author": user.username,
-                "nickname": review.nickname,
-            }
-        )
-    return templates.TemplateResponse("reviewP/millsReviewPage.html", {"request": request, "reviews": newreview})
-
-
-@router.get("/reviewP/seasonsReview", response_class=HTMLResponse)
-async def seasons_review(request: Request, db: Session = Depends(get_session)):
-    reviews = db.exec(
-        select(Review)  # select(Review, User )
-        # .join(User, Review.author_id == User.user_id)
-        .where(Review.location_id == 4)
-    ).all()
-
-    newreview = []
-    for review in reviews:  # for review, user in reviews
-        newreview.append(
-            {
-                "title": review.title,
-                "body": review.body,
-                "rating": review.rating,
-                # "author": user.username,
-                "nickname": review.nickname,
-            }
-        )
-    return templates.TemplateResponse("reviewP/seasonsReviewPage.html", {"request": request, "reviews": newreview})
-
-
-@router.get("/reviewP/wilsReview", response_class=HTMLResponse)
-async def wils_review(request: Request, db: Session = Depends(get_session)):
-    reviews = db.exec(
-        select(Review)  # select(Review, User)
-        # .join(User, Review.author_id == User.user_id)
-        .where(Review.location_id == 5)
-    ).all()
-
-    newreview = []
-    for review in reviews:  # for review, user in reviews:
-        newreview.append(
-            {
-                "title": review.title,
-                "body": review.body,
-                "rating": review.rating,
-                # "author": user.username,
-                "nickname": review.nickname,
-            }
-        )
-    return templates.TemplateResponse("reviewP/wilsReviewPage.html", {"request": request, "reviews": newreview})
-
-
-# createss a new user
-"""@router.post("/register")
-async def register(
-    username: str = Form(...),
-    password: str = Form(...),
-    db: Session = Depends(get_session),
-):
-    old_user = db.exec(select(User).where(User.username == username)).first()
-    # checking if username already exists. -- Figure out how to send this to another page when the user already exists.
-    if old_user:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Username already exists",
-        )
-        # password with hash
-    hashed_pwd = pwd_context.hash(password)
-    new_user = User(username=username, password=hashed_pwd)
-    # new_user = User(username=username, password=password) #without hash
-    db.add(new_user)
-    db.commit()
-
-    return RedirectResponse(url="auth/login", status_code=303)
-"""
-
-
-# user reviews
-@router.post("/reviewcreate")
-async def create_review(
-    meal: str = Form(...),
-    stars: int = Form(...),
-    content: str = Form(...),
-    location_id: int = Form(...),
-    author: str = Form(...),
-    db: Session = Depends(get_session),
-    # user_id: int = Form(...),
-):
-    review = Review(
-        title=meal,
-        rating=stars,
-        body=content,
-        location_id=location_id,
-        nickname=author,
-        # author_id=user_id,
+    nav_locations = get_locations(db)
+    return templates.TemplateResponse(
+        "campus_map.html",
+        {
+            "request": request,
+            "locations": location_data,
+            "nav_locations": nav_locations,
+        },
     )
 
-    db.add(review)
 
+@router.get("/reviews/{location_id}", response_class=HTMLResponse)
+async def location_reviews(
+    location_id: int, request: Request, db: Session = Depends(get_session)
+):
+    # Get location info
+    location = db.exec(
+        select(Locations).where(Locations.location_id == location_id)
+    ).first()
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+
+    # Get location hours and links
+    hours = db.exec(
+        select(LocationHours).where(LocationHours.location_id == location.location_id)
+    ).all()
+
+    links = db.exec(
+        select(LocationLinks).where(LocationLinks.location_id == location.location_id)
+    ).all()
+
+    # Get reviews for this location
+    reviews = db.exec(
+        select(Reviews).where(Reviews.location_id == location.location_id)
+    ).all()
+
+    # Restructure links to match template expectations
+    link_data = {}
+    for link in links:
+        if link.link_type == "menu":
+            link_data["menu"] = link.url
+        elif link.link_type == "instagram":
+            link_data["instagram"] = link.url
+        elif link.link_type == "getApp_android":
+            if "getApp" not in link_data:
+                link_data["getApp"] = {}
+            link_data["getApp"]["android"] = link.url
+        elif link.link_type == "getApp_ios":
+            if "getApp" not in link_data:
+                link_data["getApp"] = {}
+            link_data["getApp"]["ios"] = link.url
+
+    location_data = {
+        "id": location.location_id,
+        "name": location.name,
+        "description": location.description,
+        "coordinates": {"lat": location.latitude, "lng": location.longitude},
+        "hours": {h.day_type: h.hours for h in hours},
+        "links": link_data,
+        "image": location.image_filename,
+        "map": generate_map_url(location.latitude, location.longitude, location.name),
+    }
+
+    nav_locations = get_locations(db)
+    return templates.TemplateResponse(
+        "reviews.html",
+        {
+            "request": request,
+            "location": location_data,
+            "reviews": reviews,
+            "locations": nav_locations,
+        },
+    )
+
+
+@router.get("/create-review/{location_id}", response_class=HTMLResponse)
+async def leave_review_pages(
+    location_id: int, request: Request, db: Session = Depends(get_session)
+):
+    # Get location info
+    location = db.exec(
+        select(Locations).where(Locations.location_id == location_id)
+    ).first()
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+
+    # Get location hours and links
+    hours = db.exec(
+        select(LocationHours).where(LocationHours.location_id == location.location_id)
+    ).all()
+
+    links = db.exec(
+        select(LocationLinks).where(LocationLinks.location_id == location.location_id)
+    ).all()
+
+    # Restructure links to match template expectations
+    link_data = {}
+    for link in links:
+        if link.link_type == "menu":
+            link_data["menu"] = link.url
+        elif link.link_type == "instagram":
+            link_data["instagram"] = link.url
+        elif link.link_type == "getApp_android":
+            if "getApp" not in link_data:
+                link_data["getApp"] = {}
+            link_data["getApp"]["android"] = link.url
+        elif link.link_type == "getApp_ios":
+            if "getApp" not in link_data:
+                link_data["getApp"] = {}
+            link_data["getApp"]["ios"] = link.url
+
+    location_data = {
+        "id": location.location_id,
+        "name": location.name,
+        "description": location.description,
+        "coordinates": {"lat": location.latitude, "lng": location.longitude},
+        "hours": {h.day_type: h.hours for h in hours},
+        "links": link_data,
+        "image": location.image_filename,
+        "map": generate_map_url(location.latitude, location.longitude, location.name),
+    }
+
+    nav_locations = get_locations(db)
+    return templates.TemplateResponse(
+        "create_review.html",
+        {"request": request, "location": location_data, "locations": nav_locations},
+    )
+
+
+@router.post("/reviewcreate")
+async def create_review(
+    title: str = Form(...),
+    rating: int = Form(...),
+    body: str = Form(...),
+    location_id: int = Form(...),
+    nickname: str = Form(...),
+    db: Session = Depends(get_session),
+):
+    print(f"Creating review for location {location_id} with title '{title}'")
+
+    # Validate rating
+    if not 1 <= rating <= 5:
+        raise HTTPException(status_code=422, detail="Rating must be between 1 and 5")
+
+    # Get location from database
+    location = db.exec(
+        select(Locations).where(Locations.location_id == location_id)
+    ).first()
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+
+    review = Reviews(
+        title=title,
+        rating=rating,
+        body=body,
+        location_id=location.location_id,
+        nickname=nickname,
+    )
+    db.add(review)
     db.commit()
 
-    return RedirectResponse(url="/menu", status_code=303)
+    return RedirectResponse(url=f"/reviews/{location_id}", status_code=303)
+
+
+@router.on_event("startup")
+async def startup_event():
+    """Initialize database with locations on startup"""
+    db = next(get_session())
