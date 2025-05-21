@@ -44,7 +44,7 @@ class Reviews(SQLModel, table=True):
 
 
 # Database setup
-database_url = os.getenv("DATABASE_URL", "sqlite:///instance/snacks.db")
+database_url = os.getenv("DATABASE_URL", "sqlite:///database.db")
 engine = create_engine(database_url, echo=True)
 
 
@@ -327,7 +327,7 @@ cli = typer.Typer(help="SunySnacks database management CLI")
 
 @cli.command()
 def init_db(
-    db_path: str = typer.Option("instance/snacks.db", help="Path to SQLite database"),
+    db_path: str = typer.Option("database.db", help="Path to SQLite database"),
     schema_path: str = typer.Option(
         "py_src/create_schema.sql", help="Path to SQL schema file"
     ),
@@ -342,7 +342,7 @@ def init_db(
 
 @cli.command()
 def reset_db(
-    db_path: str = typer.Option("instance/snacks.db", help="Path to SQLite database"),
+    db_path: str = typer.Option("database.db", help="Path to SQLite database"),
     schema_path: str = typer.Option(
         "py_src/create_schema.sql", help="Path to SQL schema file"
     ),
@@ -360,7 +360,7 @@ def reset_db(
 
 @cli.command()
 def export_db(
-    db_path: str = typer.Option("instance/snacks.db", help="Path to SQLite database"),
+    db_path: str = typer.Option("database.db", help="Path to SQLite database"),
     output_path: str = typer.Option(
         "locations_export.json", help="Path to output JSON file"
     ),

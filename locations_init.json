@@ -1,0 +1,122 @@
+{
+    "argo": {
+        "id": "argo",
+        "name": "Argo Tea",
+        "description": "Argo Tea offers a selection of specialty teas, coffee, and light snacks. Perfect for a quick beverage or study break.",
+        "coordinates": {
+            "lat": 42.467861,
+            "lng": -75.062069
+        },
+        "hours": {
+            "weekdays": "7:30 AM - 8:00 PM",
+            "friday": "7:30 AM - 7:00 PM",
+            "saturday": "Closed",
+            "sunday": "Closed"
+        },
+        "links": {
+            "menu": "https://oneonta.sodexomyway.com/en-us/locations/argo-tea",
+            "instagram": "https://www.instagram.com/SUNYONEYDINING/",
+            "getApp": {
+                "android": "https://play.google.com/store/apps/details?id=com.cbord.get",
+                "ios": "https://apps.apple.com/us/app/get-mobile/id844091049"
+            }
+        },
+        "image": "ArgoTea.jpg"
+    },
+    "marketplace": {
+        "id": "marketplace",
+        "name": "Mills Marketplace",
+        "description": "The Marketplace is a place where you can get your groceries. It has a variety of snacks, canned goods, and beverages available. The marketplace has a sweet pizza place, sandwich spot, and fresh sushi rolls available if you need to get a quick bite.",
+        "coordinates": {
+            "lat": 42.468741,
+            "lng": -75.060596
+        },
+        "hours": {
+            "weekdays": "11:00 AM - 1:00 AM",
+            "friday": "11:00 AM - 1:00 AM",
+            "saturday": "11:00 AM - 1:00 AM",
+            "sunday": "11:00 AM - 1:00 AM"
+        },
+        "links": {
+            "menu": "https://oneonta.sodexomyway.com/en-us/locations/mills-marketplace",
+            "instagram": "https://www.instagram.com/SUNYONEYDINING/",
+            "getApp": {
+                "android": "https://play.google.com/store/apps/details?id=com.cbord.get",
+                "ios": "https://apps.apple.com/us/app/get-mobile/id844091049"
+            }
+        },
+        "image": "millsmarketplace.jpg"
+    },
+    "mills": {
+        "id": "mills",
+        "name": "Mills Dining Hall",
+        "description": "Mills Dining Hall offers a range of meal options including hot entrees, salad bar, and made-to-order stations. The hall provides a comfortable dining environment for students with diverse dietary needs.",
+        "coordinates": {
+            "lat": 42.468741,
+            "lng": -75.060596
+        },
+        "hours": {
+            "weekdays": "7:30 AM - 8:00 PM",
+            "friday": "7:30 AM - 7:00 PM",
+            "saturday": "10:00 AM - 7:00 PM",
+            "sunday": "10:00 AM - 8:00 PM"
+        },
+        "links": {
+            "menu": "https://oneonta.sodexomyway.com/en-us/locations/mills",
+            "instagram": "https://www.instagram.com/SUNYONEYDINING/",
+            "getApp": {
+                "android": "https://play.google.com/store/apps/details?id=com.cbord.get",
+                "ios": "https://apps.apple.com/us/app/get-mobile/id844091049"
+            }
+        },
+        "image": "millsmarketplace.jpg"
+    },
+    "wilsbach": {
+        "id": "wilsbach",
+        "name": "Wilsbach Dining Hall",
+        "description": "Wilsbach Dining Hall contains more of the breakfast foods, from cereal to omelets to waffles. For dinner the option of pasta, pizza, vegan food, or an organic meal.",
+        "coordinates": {
+            "lat": 42.468781,
+            "lng": -75.060411
+        },
+        "hours": {
+            "weekdays": "7:30 AM - 8:00 PM",
+            "friday": "7:30 AM - 7:00 PM",
+            "saturday": "9:00 AM - 7:00 PM",
+            "sunday": "9:00 AM - 8:00 PM"
+        },
+        "links": {
+            "menu": "https://oneonta.sodexomyway.com/en-us/locations/wilsbach",
+            "instagram": "https://www.instagram.com/SUNYONEYDINING/",
+            "getApp": {
+                "android": "https://play.google.com/store/apps/details?id=com.cbord.get",
+                "ios": "https://apps.apple.com/us/app/get-mobile/id844091049"
+            }
+        },
+        "image": "wilsbachdininghall.jpg"
+    },
+    "seasons": {
+        "id": "seasons",
+        "name": "Seasons",
+        "description": "Seasons offers a diverse menu with rotating options throughout the week. Features include a salad bar, grill station, and daily specials.",
+        "coordinates": {
+            "lat": 42.470332,
+            "lng": -75.062667
+        },
+        "hours": {
+            "weekdays": "7:30 AM - 8:00 PM",
+            "friday": "7:30 AM - 7:00 PM",
+            "saturday": "10:00 AM - 7:00 PM",
+            "sunday": "10:00 AM - 8:00 PM"
+        },
+        "links": {
+            "menu": "https://oneonta.sodexomyway.com/en-us/locations/seasons",
+            "instagram": "https://www.instagram.com/SUNYONEYDINING/",
+            "getApp": {
+                "android": "https://play.google.com/store/apps/details?id=com.cbord.get",
+                "ios": "https://apps.apple.com/us/app/get-mobile/id844091049"
+            }
+        },
+        "image": "seasons.jpg"
+    }
+}
