@@ -1,0 +1,154 @@
+/* Standard for the leave review page.*/
+
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+footer {
+  margin-top: auto;
+  background-color: #1a2b3c;
+  color: white;
+  padding: 2rem 0;
+}
+
+
+
+
+input[type="text"],
+input[type="number"],
+textarea {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #1a2b3c;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #c41e3d;
+  box-shadow: 0 0 0 4px rgba(196, 30, 61, 0.1);
+}
+
+form {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #26619c;
+  border: none;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+form h2 {
+  color: white;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+label {
+  font-weight: 500;
+  color: white;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+#submit,
+#cancel {
+  background-color: #c41e3d;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#submit:hover,
+#cancel:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+#cancel {
+  background-color: #6b7280;
+  margin-left: 1rem;
+}
+
+.navbar-custom {
+  background-color: #c41e3d;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.navbar-brand {
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.025em;
+}
+
+.navbar-brand:hover {
+  color: white !important;
+  opacity: 0.9;
+}
+
+/* Star rating styling */
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.star-rating {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  cursor: pointer;
+  color: #d1d5db;
+  font-size: 1.5rem;
+}
+
+.star-rating label:hover,
+.star-rating label:hover~label,
+.star-rating input:checked~label {
+  color: #c41e3d;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+form {
+  animation: slideIn 0.5s ease-out;
+}
