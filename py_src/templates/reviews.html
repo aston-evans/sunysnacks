@@ -1,0 +1,64 @@
+{% extends 'blog/base_reviews.html' %}
+
+{% block title %}{{ location.name }}{% endblock %}
+
+{% block h1 %}{{ location.name }}{% endblock %}
+
+{% block content %}
+<button class="btn p-2 mx-2" id="menu" onclick="location.href='/create-review/{{ location.id }}'">
+    Leave a Review
+</button>
+{% endblock %}
+
+{% block location %}{{ location.name }}{% endblock %}
+
+{% block time %}
+    {% if location.hours.weekdays == location.hours.friday %}
+        {{ location.name }} is open from {{ location.hours.weekdays }} Monday through Friday.
+    {% else %}
+        {{ location.name }} is open from {{ location.hours.weekdays }} Monday through Thursday. 
+        Friday they are open {{ location.hours.friday }}.
+    {% endif %}
+    {% if location.hours.saturday == "Closed" and location.hours.sunday == "Closed" %}
+        They are closed on weekends.
+    {% else %}
+        Saturday they are open {{ location.hours.saturday }}.
+        Sunday they are open {{ location.hours.sunday }}.
+    {% endif %}
+{% endblock %}
+
+{% block place %}{{ location.name }}{% endblock %}
+
+{% block description %}{{ location.description }}{% endblock %}
+
+{% block socials %}
+<div class="social-links" role="navigation" aria-label="Download apps and social media links">
+    <a href="{{ location.links.getApp.android }}" 
+       class="app-link google-play" 
+       target="_blank" 
+       rel="noopener"
+       data-tooltip="Download the GET Mobile app on Android">
+        <div class="icon-wrapper">
+            <span class="material-icons">android</span>
+        </div>
+    </a>
+    <a href="{{ location.links.getApp.ios }}" 
+       class="app-link app-store" 
+       target="_blank" 
+       rel="noopener"
+       data-tooltip="Download the GET Mobile app on iOS">
+        <div class="icon-wrapper">
+            <span class="material-icons">phone_iphone</span>
+        </div>
+    </a>
+    <a href="{{ location.links.menu }}" 
+       class="app-link menu" 
+       target="_blank" 
+       rel="noopener"
+       data-tooltip="View Full Menu & Hours">
+        <div class="icon-wrapper">
+            <span class="material-icons">restaurant_menu</span>
+        </div>
+    </a>
+</div>
+{% endblock %}

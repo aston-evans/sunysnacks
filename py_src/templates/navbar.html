@@ -1,0 +1,47 @@
+<!-- Modern Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/menu">
+      <span class="material-icons me-2">restaurant</span>
+      SunySnacks
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold d-flex align-items-center" href="/campus-map">
+            <span class="material-icons me-1">map</span>
+            Campus Map
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white fw-bold" data-bs-toggle="dropdown" role="button"
+            aria-expanded="false">
+            <span class="material-icons me-1">rate_review</span>
+            Create Review
+          </a>
+          <ul class="dropdown-menu bg-secondary">
+            {% for loc in locations %}
+            <li><a class="dropdown-item text-white" href="/create-review/{{ loc.id }}">{{ loc.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white fw-bold" data-bs-toggle="dropdown" role="button"
+            aria-expanded="false">
+            <span class="material-icons me-1">star</span>
+            Current Reviews
+          </a>
+          <ul class="dropdown-menu bg-secondary">
+            {% for loc in locations %}
+            <li><a class="dropdown-item text-white" href="/reviews/{{ loc.id }}">{{ loc.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

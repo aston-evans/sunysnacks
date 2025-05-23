@@ -1,0 +1,35 @@
+{% extends 'blog/base_leave_reviews.html' %}
+
+{% block title %}{{ location.name }}{% endblock %}
+
+{% block h2 %}{{ location.name }}{% endblock %}
+
+{% block content %}
+<form class="my-5 pb-4 bg-custom" method="post" action="/reviewcreate">
+    <input type="hidden" name="location_id" value="{{ location.id }}">
+    
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="rating" class="form-label">Rating (1-5)</label>
+        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="body" class="form-label">Review</label>
+        <textarea class="form-control" id="body" name="body" rows="4" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="nickname" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="nickname" name="nickname" required>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-light px-4">Submit Review</button>
+    </div>
+</form>
+{% endblock %}
