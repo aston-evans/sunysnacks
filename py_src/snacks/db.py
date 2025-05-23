@@ -48,9 +48,10 @@ database_url = os.getenv("DATABASE_URL", "sqlite:///database.db")
 engine = create_engine(database_url, echo=True)
 
 
-def create_db_and_tables():
+'''def create_db_and_tables():
     """Create database tables if they don't exist"""
     SQLModel.metadata.create_all(engine)
+'''
 
 
 def get_session():
@@ -354,8 +355,9 @@ def reset_db(
         print(f"Deleted existing database at {db_path}")
 
     # Create new database with schema only
-    _ = create_db(db_path, schema_path, json_path=None)
-    print(f"Database reset with empty schema at {db_path}")
+    # _ = create_db(db_path, schema_path, json_path=None)
+    # print(f"Database reset with empty schema at {db_path}")
+
 
 
 @cli.command()
@@ -424,3 +426,7 @@ def export_db(
             json.dump(locations_data, f, indent=2)
 
         print(f"Exported {len(locations_data)} locations to {output_path}")
+
+
+if __name__ == "__main__":
+    cli()

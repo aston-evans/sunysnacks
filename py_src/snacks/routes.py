@@ -42,7 +42,7 @@ def get_locations(db: Session):
 @router.get("/", response_class=HTMLResponse)
 async def root(request: Request, db: Session = Depends(get_session)):
     # Query to fetch reviews and associated location information
-    
+
     review_locations = db.exec(
         select(Reviews, Locations).join(
             Locations, Reviews.location_id == Locations.location_id
@@ -51,40 +51,12 @@ async def root(request: Request, db: Session = Depends(get_session)):
 
     allreviews = []
     for review, location in review_locations:
-        # Get location hours
-        hours = db.exec(
-            select(LocationHours).where(
-                LocationHours.location_id == location.location_id
-            )
-        ).all()
-
-        # Get location links
-        links = db.exec(
-            select(LocationLinks).where(
-                LocationLinks.location_id == location.location_id
-            )
-        ).all()
-
         allreviews.append(
             {
                 "title": review.title,
                 "body": review.body,
                 "rating": review.rating,
-                "location": {
-                    "id": location.location_id,
-                    "name": location.name,
-                    "description": location.description,
-                    "coordinates": {
-                        "lat": location.latitude,
-                        "lng": location.longitude,
-                    },
-                    "hours": {h.day_type: h.hours for h in hours},
-                    "links": {l.link_type: l.url for l in links},
-                    "image": location.image_filename,
-                    "map": generate_map_url(
-                        location.latitude, location.longitude, location.name
-                    ),
-                },
+                "location": location.name,
                 "nickname": review.nickname,
             }
         )
@@ -128,7 +100,7 @@ async def campus_map(request: Request, db: Session = Depends(get_session)):
                 "description": location.description,
                 "coordinates": {"lat": location.latitude, "lng": location.longitude},
                 "hours": {h.day_type: h.hours for h in hours},
-                "links": {l.link_type: l.url for l in links},
+                "links": {l.link_type: l.url for l in links},  # noqa: E741
                 "image": location.image_filename,
             }
         )
@@ -299,5 +271,4 @@ async def create_review(
 
 @router.on_event("startup")
 async def startup_event():
-    """Initialize database with locations on startup"""
-    db = next(get_session())
+    _ = next(get_session())
