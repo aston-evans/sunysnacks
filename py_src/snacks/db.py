@@ -1,10 +1,9 @@
 import json
 import os
-import urllib.parse
 from typing import Optional
-from fastapi import HTTPException
+
 import typer
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Field, Session, SQLModel, create_engine, select

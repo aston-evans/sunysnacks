@@ -1,28 +1,26 @@
 # adding user info in the future
 import urllib.parse
 
-from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi import APIRouter, Depends, Form, HTTPException, Request  # noqa: F401
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlmodel import Session, select
 
 from snacks.db import (
-    LocationHours,
-    LocationLinks,
+    LocationHours,  #noqa: F401
+    LocationLinks,  #noqa: F401
     Locations,
     Reviews,
-    get_session,
-    templates,
-    verify_location_exists,
-    validate_rating,
+    build_location_data,
     create_review_in_db,
+    get_full_location_summaries,
     get_location,
     get_location_hours,
     get_location_links,
     get_reviews_for_location,
-    build_location_data,
-    get_all_locations,
-    get_full_location_summaries,
-   
+    get_session,
+    templates,
+    validate_rating,
+    verify_location_exists,
 )
 
 router = APIRouter()
