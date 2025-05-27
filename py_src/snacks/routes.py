@@ -12,6 +12,17 @@ from snacks.db import (
     Reviews,
     get_session,
     templates,
+    verify_location_exists,
+    validate_rating,
+    create_review_in_db,
+    get_location,
+    get_location_hours,
+    get_location_links,
+    get_reviews_for_location,
+    build_location_data,
+    get_all_locations,
+    get_full_location_summaries,
+   
 )
 
 router = APIRouter()
@@ -74,6 +85,19 @@ async def menu(request: Request, db: Session = Depends(get_session)):
 
 @router.get("/campus-map", response_class=HTMLResponse)
 async def campus_map(request: Request, db: Session = Depends(get_session)):
+    location_data = get_full_location_summaries(db)
+    nav_locations = get_locations(db)
+
+    return templates.TemplateResponse(
+        "campus_map.html",
+        {
+            "request": request,
+            "locations": location_data,
+            "nav_locations": nav_locations,
+        },
+    )
+'''@router.get("/campus-map", response_class=HTMLResponse)
+async def campus_map(request: Request, db: Session = Depends(get_session)):
     # Get all locations with their hours and links
     locations = db.exec(select(Locations)).all()
     location_data = []
@@ -114,61 +138,23 @@ async def campus_map(request: Request, db: Session = Depends(get_session)):
             "nav_locations": nav_locations,
         },
     )
-
-
+'''
 @router.get("/reviews/{location_id}", response_class=HTMLResponse)
-async def location_reviews(
-    location_id: int, request: Request, db: Session = Depends(get_session)
-):
-    # Get location info
-    location = db.exec(
-        select(Locations).where(Locations.location_id == location_id)
-    ).first()
-    if not location:
-        raise HTTPException(status_code=404, detail="Location not found")
+async def location_reviews(location_id: int, request: Request, db: Session = Depends(get_session)):
+    location = get_location(db, location_id)
+    hours = get_location_hours(db, location_id)
+    links = get_location_links(db, location_id)
+    reviews = get_reviews_for_location(db, location_id)
 
-    # Get location hours and links
-    hours = db.exec(
-        select(LocationHours).where(LocationHours.location_id == location.location_id)
-    ).all()
-
-    links = db.exec(
-        select(LocationLinks).where(LocationLinks.location_id == location.location_id)
-    ).all()
-
-    # Get reviews for this location
-    reviews = db.exec(
-        select(Reviews).where(Reviews.location_id == location.location_id)
-    ).all()
-
-    # Restructure links to match template expectations
-    link_data = {}
-    for link in links:
-        if link.link_type == "menu":
-            link_data["menu"] = link.url
-        elif link.link_type == "instagram":
-            link_data["instagram"] = link.url
-        elif link.link_type == "getApp_android":
-            if "getApp" not in link_data:
-                link_data["getApp"] = {}
-            link_data["getApp"]["android"] = link.url
-        elif link.link_type == "getApp_ios":
-            if "getApp" not in link_data:
-                link_data["getApp"] = {}
-            link_data["getApp"]["ios"] = link.url
-
-    location_data = {
-        "id": location.location_id,
-        "name": location.name,
-        "description": location.description,
-        "coordinates": {"lat": location.latitude, "lng": location.longitude},
-        "hours": {h.day_type: h.hours for h in hours},
-        "links": link_data,
-        "image": location.image_filename,
-        "map": generate_map_url(location.latitude, location.longitude, location.name),
-    }
+    location_data = build_location_data(
+        location,
+        hours,
+        links,
+        map_url=generate_map_url(location.latitude, location.longitude, location.name),
+    )
 
     nav_locations = get_locations(db)
+
     return templates.TemplateResponse(
         "reviews.html",
         {
@@ -178,60 +164,30 @@ async def location_reviews(
             "locations": nav_locations,
         },
     )
-
-
 @router.get("/create-review/{location_id}", response_class=HTMLResponse)
-async def leave_review_pages(
-    location_id: int, request: Request, db: Session = Depends(get_session)
-):
-    # Get location info
-    location = db.exec(
-        select(Locations).where(Locations.location_id == location_id)
-    ).first()
-    if not location:
-        raise HTTPException(status_code=404, detail="Location not found")
+async def leave_review_pages(location_id: int, request: Request, db: Session = Depends(get_session)):
+    location = get_location(db, location_id)
+    hours = get_location_hours(db, location_id)
+    links = get_location_links(db, location_id)
 
-    # Get location hours and links
-    hours = db.exec(
-        select(LocationHours).where(LocationHours.location_id == location.location_id)
-    ).all()
-
-    links = db.exec(
-        select(LocationLinks).where(LocationLinks.location_id == location.location_id)
-    ).all()
-
-    # Restructure links to match template expectations
-    link_data = {}
-    for link in links:
-        if link.link_type == "menu":
-            link_data["menu"] = link.url
-        elif link.link_type == "instagram":
-            link_data["instagram"] = link.url
-        elif link.link_type == "getApp_android":
-            if "getApp" not in link_data:
-                link_data["getApp"] = {}
-            link_data["getApp"]["android"] = link.url
-        elif link.link_type == "getApp_ios":
-            if "getApp" not in link_data:
-                link_data["getApp"] = {}
-            link_data["getApp"]["ios"] = link.url
-
-    location_data = {
-        "id": location.location_id,
-        "name": location.name,
-        "description": location.description,
-        "coordinates": {"lat": location.latitude, "lng": location.longitude},
-        "hours": {h.day_type: h.hours for h in hours},
-        "links": link_data,
-        "image": location.image_filename,
-        "map": generate_map_url(location.latitude, location.longitude, location.name),
-    }
+    location_data = build_location_data(
+        location,
+        hours,
+        links,
+        map_url=generate_map_url(location.latitude, location.longitude, location.name),
+    )
 
     nav_locations = get_locations(db)
+
     return templates.TemplateResponse(
         "create_review.html",
-        {"request": request, "location": location_data, "locations": nav_locations},
+        {
+            "request": request,
+            "location": location_data,
+            "locations": nav_locations,
+        },
     )
+
 
 
 @router.post("/reviewcreate")
@@ -243,29 +199,16 @@ async def create_review(
     nickname: str = Form(...),
     db: Session = Depends(get_session),
 ):
-    print(f"Creating review for location {location_id} with title '{title}'")
-
-    # Validate rating
-    if not 1 <= rating <= 5:
-        raise HTTPException(status_code=422, detail="Rating must be between 1 and 5")
-
-    # Get location from database
-    location = db.exec(
-        select(Locations).where(Locations.location_id == location_id)
-    ).first()
-    if not location:
-        raise HTTPException(status_code=404, detail="Location not found")
-
-    review = Reviews(
+    validate_rating(rating)
+    verify_location_exists(db, location_id)
+    create_review_in_db(
+        db=db,
         title=title,
         rating=rating,
         body=body,
-        location_id=location.location_id,
+        location_id=location_id,
         nickname=nickname,
     )
-    db.add(review)
-    db.commit()
-
     return RedirectResponse(url=f"/reviews/{location_id}", status_code=303)
 
 

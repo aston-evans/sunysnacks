@@ -1,7 +1,8 @@
 import json
 import os
+import urllib.parse
 from typing import Optional
-
+from fastapi import HTTPException
 import typer
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -108,7 +109,7 @@ def create_db(
                 data = json.load(f)
 
             # Process locations
-            print(f"Populating database with {len(data)} locations from {json_path}")
+            # print(f"Populating database with {len(data)} locations from {json_path}")
             for loc_id, loc_data in data.items():
                 # Create location
                 location = Locations(
@@ -321,6 +322,99 @@ def init_locations(db: Session):
 
         db.commit()
 
+# Data access and formatting utilities for retrieving and preparing
+# location, hours, links, and reviews for use in route logic
+
+def get_location(db: Session, location_id: int):
+    location = db.exec(select(Locations).where(Locations.location_id == location_id)).first()
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return location
+
+def get_location_hours(db: Session, location_id: int):
+    return db.exec(select(LocationHours).where(LocationHours.location_id == location_id)).all()
+
+def get_location_links(db: Session, location_id: int):
+    return db.exec(select(LocationLinks).where(LocationLinks.location_id == location_id)).all()
+
+def get_reviews_for_location(db: Session, location_id: int):
+    return db.exec(select(Reviews).where(Reviews.location_id == location_id)).all()
+
+def format_links(links):
+    link_data = {}
+    for link in links:
+        if link.link_type == "menu":
+            link_data["menu"] = link.url
+        elif link.link_type == "instagram":
+            link_data["instagram"] = link.url
+        elif link.link_type == "getApp_android":
+            link_data.setdefault("getApp", {})["android"] = link.url
+        elif link.link_type == "getApp_ios":
+            link_data.setdefault("getApp", {})["ios"] = link.url
+    return link_data
+
+def build_location_data(location, hours, links, map_url=None):
+    data = {
+        "id": location.location_id,
+        "name": location.name,
+        "description": location.description,
+        "coordinates": {"lat": location.latitude, "lng": location.longitude},
+        "hours": {h.day_type: h.hours for h in hours},
+        "links": format_links(links),
+        "image": location.image_filename,
+    }
+    if map_url:
+        data["map_url"] = map_url
+    return data
+
+def get_all_locations(db: Session):
+    return db.exec(select(Locations)).all()
+
+# Logic to retrieve all locations and their summaries
+def get_full_location_summaries(db: Session):
+    locations = get_all_locations(db)
+    summaries = []
+
+    for location in locations:
+        hours = get_location_hours(db, location.location_id)
+        links = get_location_links(db, location.location_id)
+        summaries.append(build_location_data(location, hours, links))
+
+    return summaries
+
+
+#logic to create a review
+def validate_rating(rating: int):
+    if not 1 <= rating <= 5:
+        raise HTTPException(status_code=422, detail="Rating must be between 1 and 5")
+
+def verify_location_exists(db: Session, location_id: int):
+    location = db.exec(select(Locations).where(Locations.location_id == location_id)).first()
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return location
+
+def create_review_in_db(
+    db: Session,
+    title: str,
+    rating: int,
+    body: str,
+    location_id: int,
+    nickname: str,
+):
+    review = Reviews(
+        title=title,
+        rating=rating,
+        body=body,
+        location_id=location_id,
+        nickname=nickname,
+    )
+    db.add(review)
+    db.commit()
+    db.refresh(review)
+    return review
+
+
 
 # Create the CLI app
 cli = typer.Typer(help="SunySnacks database management CLI")
@@ -357,7 +451,6 @@ def reset_db(
     # Create new database with schema only
     # _ = create_db(db_path, schema_path, json_path=None)
     # print(f"Database reset with empty schema at {db_path}")
-
 
 
 @cli.command()
