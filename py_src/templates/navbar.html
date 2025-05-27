@@ -25,7 +25,7 @@
           </a>
           <ul class="dropdown-menu bg-secondary">
             {% for loc in locations %}
-            <li><a class="dropdown-item text-white" href="/create-review/{{ loc.id }}">{{ loc.name }}</a></li>
+            <li><a class="dropdown-item text-reset" href="/create-review/{{ loc.id }}">{{ loc.name }}</a></li>
             {% endfor %}
           </ul>
         </li>
@@ -37,7 +37,7 @@
           </a>
           <ul class="dropdown-menu bg-secondary">
             {% for loc in locations %}
-            <li><a class="dropdown-item text-white" href="/reviews/{{ loc.id }}">{{ loc.name }}</a></li>
+            <li><a class="dropdown-item text-reset" href="/reviews/{{ loc.id }}">{{ loc.name }}</a></li>
             {% endfor %}
           </ul>
         </li>
