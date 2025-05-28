@@ -43,6 +43,10 @@ textarea:focus {
   box-shadow: 0 0 0 4px rgba(196, 30, 61, 0.1);
 }
 
+
+main {
+  flex: 1;
+}
 form {
   max-width: 600px;
   margin: 2rem auto;
