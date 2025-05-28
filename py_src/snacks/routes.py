@@ -183,6 +183,7 @@ async def leave_review_pages(location_id: int, request: Request, db: Session = D
             "request": request,
             "location": location_data,
             "locations": nav_locations,
+            "location_name": location_data["name"],
         },
     )
 
